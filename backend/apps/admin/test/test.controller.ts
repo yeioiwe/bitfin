@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class TestController {
   @Get()
   async test(): Promise<string> {
-    return 'hello from admin';
+    return 'hello from admin 2';
   }
 }
