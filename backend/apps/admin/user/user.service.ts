@@ -12,6 +12,9 @@ export class UserService {
       username: dto.username,
       password: dto.password,
       balance: dto.balance,
+      profit_1: 0,
+      profit_24: 0,
+      profit_7: 0,
     });
 
     await this.em.save(UserEntity, user);

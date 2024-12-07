@@ -14,4 +14,13 @@ export class UserEntity {
 
   @Column({ type: String })
   password!: string;
+
+  @Column({ type: Number })
+  profit_24!: number;
+
+  @Column({ type: Number })
+  profit_7!: number;
+
+  @Column({ type: Number })
+  profit_1!: number;
 }

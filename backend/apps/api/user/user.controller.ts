@@ -9,7 +9,7 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Get()
-  async jwt(@Req() request: Request) {
+  async getUser(@Req() request: Request) {
     return await this.userService.getUser(request.user.id);
   }
 }

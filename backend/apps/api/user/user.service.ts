@@ -11,6 +11,7 @@ export class UserService {
 
     if (!user) throw new BadRequestException();
 
+    console.log({ user });
     return { ...user, password: undefined };
   }
 }
