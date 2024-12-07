@@ -11,7 +11,7 @@ export const Footer = () => {
     const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <Col mx={6} mt={12} height={400} alignItems={'flex-start'} justifyContent={'space-around'}>
+        <Col mx={6} pt={12} height={400} alignItems={'flex-start'} justifyContent={'flex-start'}>
             <Box display={'flex'} flexDirection={isSm ? 'column' : 'row'} gap={isSm ? 4 : 12} alignItems={'flex-start'}>
                 <Col gap={2}>
                     <Link href={'https://google.com'}>

@@ -1,6 +1,6 @@
 'use client';
-import { Footer } from '@/sections/footer/footer';
-import { AppBarLayout } from '@/sections/layout/app.bar.layout';
+import { Footer } from '@/view/main/footer/footer';
+import { AppBarLayout } from '@/view/main/layout/app.bar.layout';
 import { AppLayout } from './app.layout';
 
 export default function RootLayout({
