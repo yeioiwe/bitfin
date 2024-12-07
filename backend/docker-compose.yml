@@ -5,6 +5,6 @@ services:
     image: mysql
     restart: always
     ports:
-      - 127.0.0.1:33061:3306
+      - '33061:3306'
     environment:
       MYSQL_ROOT_PASSWORD: admin
