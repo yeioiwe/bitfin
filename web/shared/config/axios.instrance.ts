@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
     //TODO
-    baseURL: 'http://127.0.0.1:8080',
+    baseURL: 'http://109.120.139.129:8080',
 });
 
 axiosInstance.interceptors.request.use(

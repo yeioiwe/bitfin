@@ -3,6 +3,7 @@ import axiosInstance from "@/config/axios.instrance";
 import { Col, Row } from "@/config/boxes";
 import { User } from "@/config/user";
 import { Box, Button, Typography } from "@mui/material";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { UserItem } from "./user.item";
@@ -26,7 +27,7 @@ export const DashboardMain = () => {
 
   return (
     <Col>
-      <Link href={"/add"}>
+      <Link target="_blank" href={"/add"}>
         <Button variant="contained">создать пользователя</Button>
       </Link>
 
@@ -40,10 +41,10 @@ export const DashboardMain = () => {
 
         {userList.map((u, i) => (
           <UserItem
+            key={i}
             id={u.id}
             balance={u.balance}
             username={u.username}
-            key={i}
           />
         ))}
       </Col>

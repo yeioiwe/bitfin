@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserEntity } from 'apps/libs/db/entity/user.entity';
 import { EntityManager } from 'typeorm';
 import { UserCreateDto } from './user.dto';
@@ -24,5 +24,28 @@ export class UserService {
     const userList = await this.em.find(UserEntity);
 
     return userList;
+  }
+
+  async getUserById(userId: number) {
+    const user = await this.em.findOneBy(UserEntity, { id: userId });
+
+    if (!user) throw new BadRequestException();
+
+    return user;
+  }
+
+  async editUser(body: UserEntity) {
+    const user = await this.em.findOneBy(UserEntity, { id: body.id });
+
+    if (!user) throw new BadRequestException();
+
+    user.balance = body.balance;
+    user.username = body.username;
+    user.password = body.password;
+    user.profit_1 = body.profit_1;
+    user.profit_24 = body.profit_24;
+    user.profit_7 = body.profit_7;
+
+    await this.em.save(UserEntity, user);
   }
 }

@@ -23,7 +23,7 @@ export default function LoginPage() {
     const handleLogin = async () => {
         try {
             //TODO url .env
-            const response = await axios.post('http://127.0.0.1:8080/auth/login', {
+            const response = await axios.post('http://109.120.139.129:8080/auth/login', {
                 username: getValues('login'),
                 password: getValues('password'),
             });

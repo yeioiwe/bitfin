@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { UserEntity } from 'apps/libs/db/entity/user.entity';
 import { UserCreateDto } from './user.dto';
 import { UserService } from './user.service';
 
@@ -16,5 +17,15 @@ export class UserController {
     const userList = await this.userServcie.getUserList();
 
     return { users: userList };
+  }
+
+  @Post('id')
+  async getUserById(@Body() body: { id: number }) {
+    return await this.userServcie.getUserById(body.id);
+  }
+
+  @Post('edit')
+  async editUser(@Body() body: UserEntity) {
+    await this.userServcie.editUser(body);
   }
 }
