@@ -19,4 +19,10 @@ export class UserService {
 
     await this.em.save(UserEntity, user);
   }
+
+  async getUserList() {
+    const userList = await this.em.find(UserEntity);
+
+    return userList;
+  }
 }
