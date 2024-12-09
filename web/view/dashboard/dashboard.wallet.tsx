@@ -1,10 +1,12 @@
 'use client';
+import { User } from '@/shared/config/api/api.schemas';
 import theme from '@/shared/theme/theme';
-import { Col } from '@/shared/ui/boxes';
+import { Col, Row } from '@/shared/ui/boxes';
 import { StyledButton } from '@/shared/ui/styled.button';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 
-export const UserCard = ({ user }: { user: any }) => {
+export const DashboardWallet = ({ user }: { user: User }) => {
     const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
@@ -17,7 +19,11 @@ export const UserCard = ({ user }: { user: any }) => {
                 gap={isSm ? 2 : 0}
             >
                 <Col>
-                    <Typography fontSize={'24px'}>Пользователь: {user.username}</Typography>
+                    <Row gap={2} justifyContent={'flex-start'}>
+                        <AccountCircleIcon />
+                        <Typography fontSize={isSm ? '14px' : '24px'}>Пользователь: {user.username}</Typography>
+                    </Row>
+
                     <Typography color="#fff" fontWeight={700} fontSize={isSm ? '21px' : '48px'}>
                         Торговый баланс: ₽ {user.balance}
                     </Typography>

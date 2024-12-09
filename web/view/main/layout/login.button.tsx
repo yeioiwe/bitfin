@@ -1,21 +1,16 @@
 'use client';
+import useAuth from '@/shared/hooks/auth';
 import { StyledButton } from '@/shared/ui/styled.button';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import MenuButton from './menu.button';
 
 export const LoginButton = () => {
     const router = useRouter();
-    const [user, setUser] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) setUser(true);
-    });
+    const isToken = useAuth();
 
     return (
         <>
-            {user ? (
+            {isToken ? (
                 <MenuButton />
             ) : (
                 <StyledButton variant="contained" onClick={() => router.push('/login')}>

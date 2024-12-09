@@ -38,13 +38,13 @@ export const axiosCall = <T>(config: AxiosRequestConfig): Promise<T> => {
 
     return promise;
 };
-// TODO AUTH TOKEN
-// axios.interceptors.request.use(async config => {
-//     const session = await getSession();
-//     const token = session?.backendTokens.accessToken;
-//     config.headers.Authorization = token ? `Bearer ${token}` : ``;
 
-//     return config;
-// });
+axios.interceptors.request.use(async config => {
+    const token = localStorage.getItem('authToken');
+
+    config.headers.Authorization = token ? `Bearer ${token}` : ``;
+
+    return config;
+});
 
 export type ErrorType<Error> = AxiosError<Error>;

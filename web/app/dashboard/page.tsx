@@ -1,22 +1,30 @@
 'use client';
+import { useUserGetUser } from '@/shared/config/api/user/user';
 import theme from '@/shared/theme/theme';
 import { Col } from '@/shared/ui/boxes';
 import TradingViewWidget from '@/view/dashboard/chart';
+import { DashboardWallet } from '@/view/dashboard/dashboard.wallet';
 
-import { DashboardMain } from '@/view/dashboard/main.dashboard';
 import { TtraidnigHistory } from '@/view/dashboard/pair.history';
-import { Box, Typography, useMediaQuery } from '@mui/material';
-import { useState } from 'react';
+import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 
 export default function Dashboard() {
-    const [user, setUser] = useState<any | undefined>(null);
+    const { data: user, isLoading } = useUserGetUser();
+
     const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 
-    if (!user) return <Box></Box>;
+    console.log({ user });
+
+    if (!user || isLoading)
+        return (
+            <Box my={40} display={'flex'} justifyContent={'center'}>
+                <CircularProgress />
+            </Box>
+        );
 
     return (
         <Col mx={isSm ? 2 : 6} my={10} gap={6}>
-            <DashboardMain user={user} />
+            <DashboardWallet user={user} />
             <TtraidnigHistory />
 
             <Col gap={4}>

@@ -11,8 +11,6 @@ export const AppBarLayout = () => {
     const isSm = useMediaQuery(theme.breakpoints.down('sm'));
     const pathname = usePathname();
 
-    console.log(pathname);
-
     return (
         <Row justifyContent={'space-around'} width={'100%'} height={'60px'} bgcolor={'rgb(13, 29, 41)'}>
             <Link href={'/'}>
