@@ -1,4 +1,9 @@
+import { IsString } from 'nestjs-swagger-dto';
+
 export class AuthDto {
-  username: string;
-  password: string;
+    @IsString()
+    username: string;
+
+    @IsString()
+    password: string;
 }
