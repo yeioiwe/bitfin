@@ -6,7 +6,7 @@
         "codegen": "orval && openapi-zod-client http://127.0.0.1:8080/api/v1-json -t ./shared/config/api/api.hbs -o ./shared/config/api/api.zod.ts",
         "dev": "npm run codegen && tsc && next dev",
         "build": "tsc && NODE_ENV=production next build",
-        "start": "next start",
+        "start": "PORT=3005 next start",
         "lint": "next lint"
     },
     "dependencies": {

@@ -1,31 +1,48 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UserEntity } from 'apps/libs/db/entity/user.entity';
-import { UserCreateDto } from './user.dto';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+import { HistoryDto, UserCreateDto } from './user.dto';
 import { UserService } from './user.service';
+import { HistoryList, User, UserList } from './user.types';
 
 @Controller('user')
 export class UserController {
-  constructor(private userServcie: UserService) {}
+    constructor(private userServcie: UserService) {}
 
-  @Post()
-  async createUser(@Body() body: UserCreateDto): Promise<void> {
-    await this.userServcie.create(body);
-  }
+    @Post()
+    @ApiOkResponse()
+    async createUser(@Body() body: UserCreateDto): Promise<void> {
+        await this.userServcie.create(body);
+    }
 
-  @Get('list')
-  async getUserList() {
-    const userList = await this.userServcie.getUserList();
+    @Get('list')
+    @ApiOkResponse({ type: UserList })
+    async getUserList(): Promise<UserList> {
+        const userList = await this.userServcie.getUserList();
 
-    return { users: userList };
-  }
+        return { items: userList };
+    }
 
-  @Post('id')
-  async getUserById(@Body() body: { id: number }) {
-    return await this.userServcie.getUserById(body.id);
-  }
+    @Get(':id')
+    @ApiOkResponse({ type: User })
+    async getUserById(@Param('id') userId: number): Promise<User> {
+        return await this.userServcie.getUserById(userId);
+    }
 
-  @Post('edit')
-  async editUser(@Body() body: UserEntity) {
-    await this.userServcie.editUser(body);
-  }
+    @Post('edit')
+    @ApiOkResponse()
+    async editUser(@Body() body: User): Promise<void> {
+        await this.userServcie.editUser(body);
+    }
+
+    @Post('history')
+    @ApiOkResponse()
+    async addHistory(@Body() body: HistoryDto): Promise<void> {
+        await this.userServcie.addHistory(body);
+    }
+
+    @Get('history/:id')
+    @ApiOkResponse({ type: HistoryList })
+    async historyList(@Param('id') userId: number): Promise<HistoryList> {
+        return await this.userServcie.historyList(userId);
+    }
 }

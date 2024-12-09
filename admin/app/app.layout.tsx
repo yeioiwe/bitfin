@@ -1,14 +1,18 @@
-"use client";
+'use client';
 
-import theme from "@/config/theme";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import React from "react";
+import { queryClient } from '@/config/api/api.axios';
+import theme from '@/config/theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {children}
+            </ThemeProvider>
+        </QueryClientProvider>
+    );
 };

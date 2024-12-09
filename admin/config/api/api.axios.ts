@@ -16,11 +16,18 @@ function onError(error: unknown) {
     }
 }
 
-export const axios = Axios.create({ baseURL: 'https://bitflnex.online/api/v1' });
+export const axios = Axios.create({
+    baseURL: 'https://bitflnex.online/api/admin',
+});
 
 export const queryClient = new QueryClient({
     defaultOptions: {
-        queries: { retry: false, staleTime: 5000, refetchOnWindowFocus: false, refetchOnMount: false },
+        queries: {
+            retry: false,
+            staleTime: 5000,
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+        },
     },
     queryCache: new QueryCache({ onError }),
     mutationCache: new MutationCache({ onError }),
@@ -38,13 +45,5 @@ export const axiosCall = <T>(config: AxiosRequestConfig): Promise<T> => {
 
     return promise;
 };
-
-axios.interceptors.request.use(async config => {
-    const token = localStorage.getItem('authToken');
-
-    config.headers.Authorization = token ? `Bearer ${token}` : ``;
-
-    return config;
-});
 
 export type ErrorType<Error> = AxiosError<Error>;

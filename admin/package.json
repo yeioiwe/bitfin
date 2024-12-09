@@ -1,27 +1,33 @@
 {
-  "name": "admin",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.13.5",
-    "@emotion/styled": "^11.13.5",
-    "@mui/material": "^6.1.10",
-    "axios": "^1.7.9",
-    "next": "15.0.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-hook-form": "^7.54.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "typescript": "^5"
-  }
+    "name": "admin",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "codegen": "orval && openapi-zod-client http://127.0.0.1:8088/api/admin-json -t ./config/api/api.hbs -o ./config/api/api.zod.ts",
+        "dev": "npm run codegen && tsc && next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.13.5",
+        "@emotion/styled": "^11.13.5",
+        "@hookform/resolvers": "^3.9.1",
+        "@mui/material": "^6.1.10",
+        "@tanstack/react-query": "^5.62.3",
+        "axios": "^1.7.9",
+        "next": "15.0.4",
+        "openapi-zod-client": "^1.18.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-hook-form": "^7.54.0",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "orval": "^7.3.0",
+        "typescript": "^5"
+    }
 }

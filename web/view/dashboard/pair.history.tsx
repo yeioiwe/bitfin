@@ -1,7 +1,10 @@
+import { useUserGetHistory } from '@/shared/config/api/user/user';
 import { Col, Row } from '@/shared/ui/boxes';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 export const TtraidnigHistory = () => {
+    const { data: history } = useUserGetHistory();
+
     return (
         <Col gap={4}>
             <Typography fontSize={'24px'} fontWeight={700} color="#fff">
@@ -10,26 +13,23 @@ export const TtraidnigHistory = () => {
 
             <Col
                 justifyContent={'flex-start'}
-                minHeight={'450px'}
+                minHeight={'300px'}
                 gap={2}
                 p={2}
                 bgcolor={'#172d3e'}
                 borderRadius={'16px'}
             >
-                <Row justifyContent={'space-between'}>
+                <Row justifyContent={'space-between'} px={4}>
                     <Typography>Пара</Typography>
                     <Typography>Дата</Typography>
                     <Typography>Прибыль</Typography>
                 </Row>
-                <Col gap={1}>
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                    <HistoryItem pair="BTC/USDT" date="22.04.2024" profit={5000} />
-                </Col>
+
+                {history?.items.length === 0 ? (
+                    <ClearHistory />
+                ) : (
+                    <Col gap={1}>{history?.items.map((h, i) => <HistoryItem key={i} {...h} />)}</Col>
+                )}
             </Col>
         </Col>
     );
@@ -37,10 +37,20 @@ export const TtraidnigHistory = () => {
 
 const HistoryItem = ({ pair, date, profit }: { pair: string; date: string; profit: number }) => {
     return (
-        <Row borderRadius={'10px'} p={1} bgcolor={'rgb(13, 29, 41)'} justifyContent={'space-between'}>
-            <Typography>{pair}</Typography>
+        <Row borderRadius={'10px'} px={3} py={1} bgcolor={'rgb(13, 29, 41)'} justifyContent={'space-between'}>
+            <Typography fontWeight={700}>{pair}</Typography>
             <Typography>{date}</Typography>
-            <Typography color="#01A781">₽ {profit}</Typography>
+            <Typography fontWeight={700} color="#01A781">
+                ₽ {profit}
+            </Typography>
         </Row>
+    );
+};
+
+const ClearHistory = () => {
+    return (
+        <Box mt={10} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+            <Typography>История сделок пуста.</Typography>
+        </Box>
     );
 };
