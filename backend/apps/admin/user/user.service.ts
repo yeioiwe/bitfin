@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserEntity } from 'apps/libs/db/entity/user.entity';
+import { WalletEntity } from 'apps/libs/db/entity/wallet.entity';
 import { EntityManager } from 'typeorm';
 import { UserCreateDto } from './user.dto';
 
@@ -12,13 +13,16 @@ export class UserService {
 
         if (userExist) throw new BadRequestException();
 
-        const user = await this.em.create(UserEntity, {
+        const newUser = await this.em.create(UserEntity, {
             username: dto.username,
             password: dto.password,
             name: dto.name,
         });
 
-        await this.em.save(UserEntity, user);
+        const user = await this.em.save(UserEntity, newUser);
+
+        const wallet = await this.em.create(WalletEntity, { userId: user.id });
+        await this.em.save(WalletEntity, wallet);
     }
 
     async getUserList() {
