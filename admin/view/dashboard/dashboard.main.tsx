@@ -46,7 +46,6 @@ const UserItem = ({ user }: { user: User }) => {
             borderRadius={'6px'}
             justifyContent={'space-between'}
             border={'2px solid #1976d2'}
-            bgcolor={'#eef7ff'}
         >
             <Row gap={10}>
                 <Typography fontWeight={700}>{user.id}</Typography>
