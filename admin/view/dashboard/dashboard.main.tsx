@@ -2,7 +2,7 @@
 import { User } from '@/config/api/api.schemas';
 import { useUserGetUsers } from '@/config/api/user/user';
 import { Col, Row } from '@/config/boxes';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 export const DashboardMain = () => {
@@ -40,19 +40,21 @@ export const DashboardMain = () => {
 
 const UserItem = ({ user }: { user: User }) => {
     return (
-        <Row
-            sx={{ cursor: 'pointer' }}
-            p={2}
-            borderRadius={'6px'}
-            justifyContent={'space-between'}
-            border={'2px solid #1976d2'}
-        >
-            <Row gap={10}>
-                <Typography fontWeight={700}>{user.id}</Typography>
-                <Typography fontWeight={700}>{user.username}</Typography>
+        <Link href={`/edit/${user.id}`}>
+            <Row
+                sx={{ cursor: 'pointer' }}
+                p={2}
+                borderRadius={'6px'}
+                justifyContent={'space-between'}
+                border={'2px solid #1976d2'}
+            >
+                <Row gap={10}>
+                    <Typography fontWeight={700}>{user.id}</Typography>
+                    <Typography fontWeight={700}>{user.username}</Typography>
+                </Row>
+                <Typography fontWeight={700}>{user.name}</Typography>
             </Row>
-            <Typography fontWeight={700}>{user.name}</Typography>
-        </Row>
+        </Link>
     );
 };
 
