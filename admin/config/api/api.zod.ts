@@ -22,3 +22,5 @@ export const HistoryItem = z
     .object({ id: z.number(), userId: z.number(), pair: z.string(), date: z.string(), profit: z.number() })
     .passthrough();
 export const HistoryList = z.object({ items: z.array(HistoryItem) }).passthrough();
+export const AuthDto = z.object({ login: z.string(), password: z.string() }).passthrough();
+export const AuthResponse = z.object({ authToken: z.string() }).passthrough();

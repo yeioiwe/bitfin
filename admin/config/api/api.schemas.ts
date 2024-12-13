@@ -4,6 +4,15 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
+export interface AuthResponse {
+    authToken: string;
+}
+
+export interface AuthDto {
+    login: string;
+    password: string;
+}
+
 export interface HistoryItem {
     date: string;
     id: number;
