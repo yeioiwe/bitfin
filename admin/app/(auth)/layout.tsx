@@ -1,3 +1,5 @@
+import { Row } from '@/config/boxes';
+import { NavBar } from '@/view/layout/layout.navbar';
 import { AppLayout } from '../app.layout';
 
 export default function RootLayout({
@@ -8,7 +10,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <AppLayout>{children}</AppLayout>
+                <AppLayout>
+                    <Row m={6} gap={4} justifyContent={'flex-start'} alignItems={'flex-start'}>
+                        <NavBar />
+                        {children}
+                    </Row>
+                </AppLayout>
             </body>
         </html>
     );

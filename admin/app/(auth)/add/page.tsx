@@ -1,6 +1,5 @@
-'use client';
-import { AddPage } from '@/view/add/add.main';
+import { Typography } from '@mui/material';
 
 export default function AddUser() {
-    return <AddPage />;
+    return <Typography>add user</Typography>;
 }
