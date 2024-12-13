@@ -25,7 +25,7 @@ export const LoginPage = () => {
             {
                 onSuccess: data => {
                     localStorage.setItem('authToken', data.authToken);
-                    router.push('/');
+                    router.push('/dashboard');
                 },
             },
         );
