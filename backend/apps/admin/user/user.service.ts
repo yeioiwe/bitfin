@@ -31,6 +31,20 @@ export class UserService {
         return { items: userList };
     }
 
+    async getUserById(userId: number) {
+        const user = await this.em.findOneBy(UserEntity, { id: userId });
+        if (!user) throw new BadRequestException();
+
+        return user;
+    }
+
+    async getWallet(userId: number) {
+        const wallet = await this.em.findOneBy(WalletEntity, { userId: userId });
+        if (!wallet) throw new BadRequestException();
+
+        return wallet;
+    }
+
     //TODO ?????????????????????????
 
     // async getUserById(userId: number) {

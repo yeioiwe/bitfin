@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { UserCreateDto } from './user.dto';
 import { UserService } from './user.service';
-import { UserList } from './user.types';
+import { User, UserList, Wallet } from './user.types';
 
 @Controller('user')
 export class UserController {
@@ -23,11 +23,17 @@ export class UserController {
         return await this.userServcie.getUserList();
     }
 
-    // ??????????
+    @UseGuards(JwtGuard)
+    @Get(':id')
+    @ApiOkResponse({ type: User })
+    async getUserById(@Param('id') userId: number): Promise<User> {
+        return await this.userServcie.getUserById(userId);
+    }
 
-    // @Get('history/:id')
-    // @ApiOkResponse({ type: HistoryList })
-    // async historyList(@Param('id') userId: number): Promise<HistoryList> {
-    //     return await this.userServcie.historyList(userId);
-    // }
+    @UseGuards(JwtGuard)
+    @Get('wallet/:id')
+    @ApiOkResponse({ type: Wallet })
+    async historyList(@Param('id') userId: number): Promise<Wallet> {
+        return await this.userServcie.getWallet(userId);
+    }
 }
