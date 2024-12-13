@@ -9,6 +9,7 @@ export class UserList {
     items!: User[];
 }
 
+//TODO
 export class HistoryItem extends HistoryEntity {}
 
 export class HistoryList {

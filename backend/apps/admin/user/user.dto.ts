@@ -8,9 +8,10 @@ export class UserCreateDto {
     password!: string;
 
     @IsNumber()
-    balance!: number;
+    name!: string | null;
 }
 
+// TODO
 export class HistoryDto {
     @IsNumber()
     userId!: number;
