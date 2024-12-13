@@ -30,7 +30,6 @@ export const queryClient = new QueryClient({
             retry: false,
             staleTime: 5000,
             refetchOnWindowFocus: false,
-            refetchOnMount: false,
         },
     },
     queryCache: new QueryCache({ onError }),
@@ -49,5 +48,13 @@ export const axiosCall = <T>(config: AxiosRequestConfig): Promise<T> => {
 
     return promise;
 };
+
+axios.interceptors.request.use(async config => {
+    const token = localStorage.getItem('authToken');
+
+    config.headers.Authorization = token ? `Bearer ${token}` : ``;
+
+    return config;
+});
 
 export type ErrorType<Error> = AxiosError<Error>;

@@ -21,12 +21,13 @@ export class UserService {
         await this.em.save(UserEntity, user);
     }
 
-    //TODO ?????????????????????????
-    // async getUserList() {
-    //     const userList = await this.em.find(UserEntity);
+    async getUserList() {
+        const userList = await this.em.find(UserEntity);
 
-    //     return userList;
-    // }
+        return { items: userList };
+    }
+
+    //TODO ?????????????????????????
 
     // async getUserById(userId: number) {
     //     const user = await this.em.findOneBy(UserEntity, { id: userId });

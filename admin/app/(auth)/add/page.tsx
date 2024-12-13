@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
+import { AddUserMain } from '@/view/add/add.main';
 
 export default function AddUser() {
-    return <Typography>add user</Typography>;
+    return <AddUserMain />;
 }

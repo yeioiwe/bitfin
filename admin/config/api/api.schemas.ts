@@ -13,32 +13,10 @@ export interface AuthDto {
     password: string;
 }
 
-export interface HistoryItem {
-    date: string;
-    id: number;
-    pair: string;
-    profit: number;
-    userId: number;
-}
-
-export interface HistoryList {
-    items: HistoryItem[];
-}
-
-export interface HistoryDto {
-    date: string;
-    pair: string;
-    profit: number;
-    userId: number;
-}
-
 export interface User {
-    balance: number;
     id: number;
+    name: string;
     password: string;
-    profit_1: number;
-    profit_24: number;
-    profit_7: number;
     username: string;
 }
 
@@ -47,7 +25,7 @@ export interface UserList {
 }
 
 export interface UserCreateDto {
-    balance: number;
+    name: string;
     password: string;
     username: string;
 }

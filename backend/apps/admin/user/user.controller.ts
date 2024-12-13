@@ -3,6 +3,7 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { UserCreateDto } from './user.dto';
 import { UserService } from './user.service';
+import { UserList } from './user.types';
 
 @Controller('user')
 export class UserController {
@@ -17,9 +18,9 @@ export class UserController {
 
     @UseGuards(JwtGuard)
     @Get()
-    @ApiOkResponse()
-    async getUsers(): Promise<void> {
-        return;
+    @ApiOkResponse({ type: UserList })
+    async getUsers(): Promise<UserList> {
+        return await this.userServcie.getUserList();
     }
 
     // ??????????

@@ -12,9 +12,9 @@ export class UserEntity {
     @Column({ type: String })
     username!: string;
 
-    @ApiProperty({ type: 'string', nullable: true })
-    @Column({ type: String, nullable: true })
-    name!: string | null;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String })
+    name!: string;
 
     @ApiProperty({ type: 'string' })
     @Column({ type: String })

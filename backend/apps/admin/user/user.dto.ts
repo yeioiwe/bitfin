@@ -7,8 +7,8 @@ export class UserCreateDto {
     @IsString()
     password!: string;
 
-    @IsNumber()
-    name!: string | null;
+    @IsString()
+    name!: string;
 }
 
 // TODO
