@@ -7,27 +7,27 @@ export class WalletEntity {
     @ApiProperty({ type: 'number' })
     userId!: number;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    USDT!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    USDT!: string;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    BTC!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    BTC!: string;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    XRP!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    XRP!: string;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    BNB!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    BNB!: string;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    DOGE!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    DOGE!: string;
 
-    @ApiProperty({ type: 'number' })
-    @Column({ type: Number, default: 0 })
-    SOL!: number;
+    @ApiProperty({ type: 'string' })
+    @Column({ type: String, default: 0 })
+    SOL!: string;
 }

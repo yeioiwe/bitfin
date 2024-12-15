@@ -17,11 +17,7 @@ export const LoginPage = () => {
     const handleLogin = () => {
         const form = getValues();
         mutate(
-            {
-                data: {
-                    ...form,
-                },
-            },
+            { data: getValues() },
             {
                 onSuccess: data => {
                     localStorage.setItem('authToken', data.authToken);

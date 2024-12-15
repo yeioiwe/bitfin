@@ -33,7 +33,21 @@ export class UserController {
     @UseGuards(JwtGuard)
     @Get('wallet/:id')
     @ApiOkResponse({ type: Wallet })
-    async historyList(@Param('id') userId: number): Promise<Wallet> {
+    async wallet(@Param('id') userId: number): Promise<Wallet> {
         return await this.userServcie.getWallet(userId);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('edit')
+    @ApiOkResponse()
+    async edit(@Body() dto: User): Promise<void> {
+        return await this.userServcie.editUser(dto);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('edit/wallet')
+    @ApiOkResponse()
+    async editWallet(@Body() dto: Wallet): Promise<void> {
+        return await this.userServcie.editWallet(dto);
     }
 }

@@ -3,6 +3,7 @@ import { UserEntity } from 'apps/libs/db/entity/user.entity';
 import { WalletEntity } from 'apps/libs/db/entity/wallet.entity';
 import { EntityManager } from 'typeorm';
 import { UserCreateDto } from './user.dto';
+import { User, Wallet } from './user.types';
 
 @Injectable()
 export class UserService {
@@ -43,6 +44,26 @@ export class UserService {
         if (!wallet) throw new BadRequestException();
 
         return wallet;
+    }
+
+    async editUser(dto: User) {
+        const user = await this.em.findOneBy(UserEntity, { id: dto.id });
+
+        if (!user) throw new BadRequestException();
+
+        const newUserData = { ...dto };
+
+        await this.em.save(UserEntity, newUserData);
+    }
+
+    async editWallet(dto: Wallet) {
+        const wallet = await this.em.findOneBy(WalletEntity, { userId: dto.userId });
+
+        if (!wallet) throw new BadRequestException();
+
+        const newWalletData = { ...dto };
+
+        await this.em.save(WalletEntity, newWalletData);
     }
 
     //TODO ?????????????????????????

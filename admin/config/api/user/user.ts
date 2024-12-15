@@ -22,7 +22,7 @@ import type {
     UseQueryOptions,
     UseQueryResult,
 } from '@tanstack/react-query';
-import type { UserCreateDto, UserList } from '../api.schemas';
+import type { User, UserCreateDto, UserList, Wallet } from '../api.schemas';
 import { axiosCall } from '.././api.axios';
 import type { ErrorType } from '.././api.axios';
 
@@ -196,3 +196,343 @@ export function useUserGetUsers<
 
     return query;
 }
+
+export const userGetUserById = (id: number, signal?: AbortSignal) => {
+    return axiosCall<User>({ url: `/user/${id}`, method: 'GET', signal });
+};
+
+export const getUserGetUserByIdQueryKey = (id: number) => {
+    return [`/user/${id}`] as const;
+};
+
+export const getUserGetUserByIdInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof userGetUserById>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserGetUserByIdQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetUserById>>> = ({ signal }) =>
+        userGetUserById(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof userGetUserById>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserGetUserByIdInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof userGetUserById>>>;
+export type UserGetUserByIdInfiniteQueryError = ErrorType<unknown>;
+
+export function useUserGetUserByIdInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userGetUserById>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options: {
+        query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserGetUserByIdInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userGetUserById>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: {
+        query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> &
+            Pick<
+                UndefinedInitialDataOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>,
+                'initialData'
+            >;
+    },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserGetUserByIdInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userGetUserById>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserGetUserByIdInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userGetUserById>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserGetUserByIdInfiniteQueryOptions(id, options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getUserGetUserByIdQueryOptions = <
+    TData = Awaited<ReturnType<typeof userGetUserById>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserGetUserByIdQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetUserById>>> = ({ signal }) =>
+        userGetUserById(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof userGetUserById>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserGetUserByIdQueryResult = NonNullable<Awaited<ReturnType<typeof userGetUserById>>>;
+export type UserGetUserByIdQueryError = ErrorType<unknown>;
+
+export function useUserGetUserById<TData = Awaited<ReturnType<typeof userGetUserById>>, TError = ErrorType<unknown>>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserGetUserById<TData = Awaited<ReturnType<typeof userGetUserById>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> &
+            Pick<
+                UndefinedInitialDataOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>,
+                'initialData'
+            >;
+    },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserGetUserById<TData = Awaited<ReturnType<typeof userGetUserById>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserGetUserById<TData = Awaited<ReturnType<typeof userGetUserById>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userGetUserById>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserGetUserByIdQueryOptions(id, options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const userWallet = (id: number, signal?: AbortSignal) => {
+    return axiosCall<Wallet>({ url: `/user/wallet/${id}`, method: 'GET', signal });
+};
+
+export const getUserWalletQueryKey = (id: number) => {
+    return [`/user/wallet/${id}`] as const;
+};
+
+export const getUserWalletInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof userWallet>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserWalletQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userWallet>>> = ({ signal }) => userWallet(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof userWallet>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserWalletInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof userWallet>>>;
+export type UserWalletInfiniteQueryError = ErrorType<unknown>;
+
+export function useUserWalletInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userWallet>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options: {
+        query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserWalletInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userWallet>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: {
+        query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>, 'initialData'>;
+    },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserWalletInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userWallet>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserWalletInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userWallet>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserWalletInfiniteQueryOptions(id, options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getUserWalletQueryOptions = <TData = Awaited<ReturnType<typeof userWallet>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserWalletQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userWallet>>> = ({ signal }) => userWallet(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof userWallet>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserWalletQueryResult = NonNullable<Awaited<ReturnType<typeof userWallet>>>;
+export type UserWalletQueryError = ErrorType<unknown>;
+
+export function useUserWallet<TData = Awaited<ReturnType<typeof userWallet>>, TError = ErrorType<unknown>>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserWallet<TData = Awaited<ReturnType<typeof userWallet>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>, 'initialData'>;
+    },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserWallet<TData = Awaited<ReturnType<typeof userWallet>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserWallet<TData = Awaited<ReturnType<typeof userWallet>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userWallet>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserWalletQueryOptions(id, options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const userEdit = (user: User, signal?: AbortSignal) => {
+    return axiosCall<void>({
+        url: `/user/edit`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: user,
+        signal,
+    });
+};
+
+export const getUserEditMutationOptions = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userEdit>>, TError, { data: User }, TContext>;
+}): UseMutationOptions<Awaited<ReturnType<typeof userEdit>>, TError, { data: User }, TContext> => {
+    const { mutation: mutationOptions } = options ?? {};
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof userEdit>>, { data: User }> = props => {
+        const { data } = props ?? {};
+
+        return userEdit(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type UserEditMutationResult = NonNullable<Awaited<ReturnType<typeof userEdit>>>;
+export type UserEditMutationBody = User;
+export type UserEditMutationError = ErrorType<unknown>;
+
+export const useUserEdit = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userEdit>>, TError, { data: User }, TContext>;
+}): UseMutationResult<Awaited<ReturnType<typeof userEdit>>, TError, { data: User }, TContext> => {
+    const mutationOptions = getUserEditMutationOptions(options);
+
+    return useMutation(mutationOptions);
+};
+export const userEditWallet = (wallet: Wallet, signal?: AbortSignal) => {
+    return axiosCall<void>({
+        url: `/user/edit/wallet`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: wallet,
+        signal,
+    });
+};
+
+export const getUserEditWalletMutationOptions = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext>;
+}): UseMutationOptions<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext> => {
+    const { mutation: mutationOptions } = options ?? {};
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof userEditWallet>>, { data: Wallet }> = props => {
+        const { data } = props ?? {};
+
+        return userEditWallet(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type UserEditWalletMutationResult = NonNullable<Awaited<ReturnType<typeof userEditWallet>>>;
+export type UserEditWalletMutationBody = Wallet;
+export type UserEditWalletMutationError = ErrorType<unknown>;
+
+export const useUserEditWallet = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext>;
+}): UseMutationResult<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext> => {
+    const mutationOptions = getUserEditWalletMutationOptions(options);
+
+    return useMutation(mutationOptions);
+};

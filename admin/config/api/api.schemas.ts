@@ -13,6 +13,16 @@ export interface AuthDto {
     password: string;
 }
 
+export interface Wallet {
+    BNB: string;
+    BTC: string;
+    DOGE: string;
+    SOL: string;
+    USDT: string;
+    userId: number;
+    XRP: string;
+}
+
 export interface User {
     id: number;
     name: string;
