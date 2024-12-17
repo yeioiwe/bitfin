@@ -1,4 +1,15 @@
-import { ExtendType } from 'apps/libs/db/db.tool';
+import { ApiProperty } from '@nestjs/swagger';
+import { HistoryEntity } from 'apps/libs/db/entity/history.entity';
 import { UserEntity } from 'apps/libs/db/entity/user.entity';
+import { WalletEntity } from 'apps/libs/db/entity/wallet.entity';
 
-export class User extends ExtendType(UserEntity, ['id', 'username']) {}
+export class User extends UserEntity {}
+
+export class HistoryItem extends HistoryEntity {}
+
+export class HistoryList {
+    @ApiProperty({ type: HistoryItem, isArray: true })
+    items!: HistoryItem[];
+}
+
+export class WalletItem extends WalletEntity {}

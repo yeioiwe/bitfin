@@ -81,4 +81,10 @@ export class MarketService implements OnModuleInit {
 
         await this.em.save(MarketEntity, rubMarket);
     }
+
+    async getMarkets() {
+        const markets = await this.em.find(MarketEntity);
+
+        return { items: markets };
+    }
 }
