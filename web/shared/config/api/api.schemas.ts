@@ -4,27 +4,6 @@
  * Project API
  * OpenAPI spec version: 1.0
  */
-export interface HistoryItem {
-    date: string;
-    id: number;
-    pair: string;
-    profit: number;
-    userId: number;
-}
-
-export interface HistoryList {
-    items: HistoryItem[];
-}
-
-export interface User {
-    balance: number;
-    id: number;
-    profit_1: number;
-    profit_24: number;
-    profit_7: number;
-    username: string;
-}
-
 export interface AuthType {
     access_token: string;
 }

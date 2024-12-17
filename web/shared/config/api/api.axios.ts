@@ -16,7 +16,7 @@ function onError(error: unknown) {
     }
 }
 
-export const axios = Axios.create({ baseURL: 'https://bitflnex.online/api/v1' });
+export const axios = Axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
 export const queryClient = new QueryClient({
     defaultOptions: {

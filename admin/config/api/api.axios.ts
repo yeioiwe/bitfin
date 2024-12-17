@@ -16,10 +16,6 @@ function onError(error: unknown) {
     }
 }
 
-// export const axios = Axios.create({
-//     baseURL: 'https://bitflnex.online/api/admin',
-// });
-
 export const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
