@@ -29,10 +29,10 @@ export const TraidingLayout = () => {
 
 const TraidingItem = () => {
     return (
-        <Row width={'350px'} justifyContent={'space-between'} bgcolor={'#172d3e'} borderRadius={'5px'} py={1} px={2}>
+        <Row width={'300px'} justifyContent={'space-between'} bgcolor={'#172d3e'} borderRadius={'5px'} py={1} px={2}>
             <Image width={30} height={30} alt="" src={BtcIcon} />
             <Typography fontWeight={700}>BTC</Typography>
-            <Typography fontWeight={700} color="#4ea351">
+            <Typography fontWeight={700} color="#67a36a">
                 Покупка
             </Typography>
             <Typography>$200</Typography>
@@ -42,10 +42,10 @@ const TraidingItem = () => {
 
 const TraidingItem2 = () => {
     return (
-        <Row width={'350px'} justifyContent={'space-between'} bgcolor={'#172d3e'} borderRadius={'5px'} py={1} px={2}>
+        <Row width={'300px'} justifyContent={'space-between'} bgcolor={'#172d3e'} borderRadius={'5px'} py={1} px={2}>
             <Image width={30} height={30} alt="" src={BtcIcon} />
             <Typography fontWeight={700}>BTC</Typography>
-            <Typography fontWeight={700} color="#bf3939">
+            <Typography fontWeight={700} color="#b75959">
                 Продажа
             </Typography>
             <Typography>$200</Typography>
