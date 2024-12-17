@@ -8,7 +8,7 @@ export const DashboardLayout = ({
     children: React.ReactNode;
 }>) => {
     return (
-        <Row height={'100vh'} m={6} justifyContent={'space-between'} alignItems={'flex-start'}>
+        <Row m={6} justifyContent={'space-between'} alignItems={'flex-start'}>
             <NavbarLayout />
             {children}
             <TraidingLayout />

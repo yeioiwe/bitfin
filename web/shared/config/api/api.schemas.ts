@@ -4,6 +4,55 @@
  * Project API
  * OpenAPI spec version: 1.0
  */
+export type MarketItemStatus = (typeof MarketItemStatus)[keyof typeof MarketItemStatus];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const MarketItemStatus = {
+    ACTIVE: 'ACTIVE',
+    ERROR: 'ERROR',
+    DISABLED: 'DISABLED',
+} as const;
+
+export interface MarketItem {
+    currency: string;
+    id: number;
+    price: string;
+    status: MarketItemStatus;
+}
+
+export interface MarketList {
+    items: MarketItem[];
+}
+
+export interface HistoryItem {
+    date: string;
+    id: number;
+    pair: string;
+    profit: number;
+    userId: number;
+}
+
+export interface HistoryList {
+    items: HistoryItem[];
+}
+
+export interface WalletItem {
+    BNB: string;
+    BTC: string;
+    DOGE: string;
+    SOL: string;
+    USDT: string;
+    userId: number;
+    XRP: string;
+}
+
+export interface User {
+    id: number;
+    name: string;
+    password: string;
+    username: string;
+}
+
 export interface AuthType {
     access_token: string;
 }

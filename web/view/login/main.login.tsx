@@ -25,7 +25,7 @@ export const LoginMain = () => {
             {
                 onSuccess: data => {
                     localStorage.setItem('authToken', data.access_token);
-                    router.push('/dashboard');
+                    router.push('/wallet');
                 },
                 onError(error) {
                     {
