@@ -5,42 +5,42 @@ const font = Inter({ weight: ['400', '700'], subsets: ['latin', 'cyrillic'] });
 
 const theme = createTheme({
     palette: {
-        mode: 'dark', // Включение темного режима
+        mode: 'dark',
 
         background: {
-            default: 'rgb(13, 29, 41)', // Цвет фона для всего приложения
-            paper: '#1d1d1d', // Цвет фона для карточек, окон и т.д.
+            default: 'rgb(13, 29, 41)',
+            paper: '#1d1d1d',
         },
 
         primary: {
-            main: '#90caf9', // Светлый оттенок синего для primary
+            main: '#90caf9',
         },
         secondary: {
-            main: '#f48fb1', // Светлый розовый оттенок для secondary
+            main: '#f48fb1',
         },
         error: {
-            main: '#f44336', // Цвет для ошибок
+            main: '#f44336',
         },
         warning: {
-            main: '#ff9800', // Цвет для предупреждений
+            main: '#ff9800',
         },
         info: {
-            main: '#2196f3', // Цвет для информации
+            main: '#2196f3',
         },
         success: {
-            main: '#4caf50', // Цвет для успешных состояний
+            main: '#4caf50',
         },
         text: {
-            primary: '#e0e0e0', // Светлый цвет для основного текста
-            secondary: '#b0b0b0', // Светлый цвет для вторичного текста
+            primary: '#e0e0e0',
+            secondary: '#b0b0b0',
         },
     },
     typography: {
         allVariants: font.style,
     },
-    spacing: 8, // Стандартное расстояние для отступов
+    spacing: 8,
     shape: {
-        borderRadius: 8, // Скругление углов
+        borderRadius: 8,
     },
     components: {
         MuiButton: {
@@ -53,7 +53,7 @@ const theme = createTheme({
         MuiLink: {
             styleOverrides: {
                 root: {
-                    textDecoration: 'none', // Убираем подчеркивание
+                    textDecoration: 'none',
                 },
             },
         },
