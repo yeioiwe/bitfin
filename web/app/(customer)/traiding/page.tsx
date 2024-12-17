@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
+import { TraidingMain } from '@/view/traiding/traiding.main';
 
 export default function Traiding() {
-    return <Typography>Traiding page</Typography>;
+    return <TraidingMain />;
 }
