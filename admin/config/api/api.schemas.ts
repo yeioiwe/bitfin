@@ -13,6 +13,25 @@ export interface AuthDto {
     password: string;
 }
 
+export interface HistoryDto {
+    date: string;
+    pair: string;
+    profit: string;
+    userId: string;
+}
+
+export interface HistoryItem {
+    date: string;
+    id: number;
+    pair: string;
+    profit: number;
+    userId: number;
+}
+
+export interface HistoryList {
+    items: HistoryItem[];
+}
+
 export interface Wallet {
     BNB: string;
     BTC: string;

@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { HistoryEntity } from 'apps/libs/db/entity/history.entity';
 import { UserEntity } from 'apps/libs/db/entity/user.entity';
 import { WalletEntity } from 'apps/libs/db/entity/wallet.entity';
 import { EntityManager } from 'typeorm';
-import { UserCreateDto } from './user.dto';
+import { HistoryDto, UserCreateDto } from './user.dto';
 import { User, Wallet } from './user.types';
 
 @Injectable()
@@ -66,33 +67,20 @@ export class UserService {
         await this.em.save(WalletEntity, newWalletData);
     }
 
-    //TODO ?????????????????????????
+    async historyList(id: number) {
+        const history = await this.em.findBy(HistoryEntity, { userId: id });
 
-    // async getUserById(userId: number) {
-    //     const user = await this.em.findOneBy(UserEntity, { id: userId });
+        return { items: history };
+    }
 
-    //     if (!user) throw new BadRequestException();
+    async addHistory(dto: HistoryDto) {
+        const history = await this.em.create(HistoryEntity, {
+            userId: +dto.userId,
+            date: dto.date,
+            pair: dto.pair,
+            profit: +dto.profit,
+        });
 
-    //     return user;
-    // }
-
-    // async editUser(body: UserEntity) {
-    //     const user = await this.em.findOneBy(UserEntity, { id: body.id });
-
-    //     if (!user) throw new BadRequestException();
-
-    //     await this.em.save(UserEntity, { ...body });
-    // }
-
-    // async addHistory(dto: HistoryDto) {
-    //     const historyItem = await this.em.create(HistoryEntity, dto);
-
-    //     await this.em.save(HistoryEntity, historyItem);
-    // }
-
-    // async historyList(userId: number) {
-    //     const history = await this.em.findBy(HistoryEntity, { userId });
-
-    //     return { items: history };
-    // }
+        await this.em.save(HistoryEntity, history);
+    }
 }

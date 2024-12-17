@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DbModule } from 'apps/libs/db/db.module';
 import { AuthModule } from './auth/auth.module';
+import { MarketController } from './market/market.controller';
+import { MarketModule } from './market/market.module';
+import { MarketService } from './market/market.service';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -13,8 +16,9 @@ import { UserModule } from './user/user.module';
         AuthModule,
         AuthModule,
         UserModule,
+        MarketModule,
     ],
-    controllers: [],
-    providers: [],
+    controllers: [MarketController],
+    providers: [MarketService],
 })
 export class ApiModule {}

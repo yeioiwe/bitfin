@@ -24,36 +24,36 @@ export const EditWallet = ({ id }: { id: number }) => {
     return (
         <Col gap={2}>
             <Typography fontWeight={700}>Кошелек</Typography>
-            <form onSubmit={handleSubmit(handleEdit)}>
+            <form onSubmit={handleEdit}>
                 <Col gap={2}>
                     <Col>
                         <Typography fontWeight={700}>USDT</Typography>
-                        <OutlinedInput type="number" {...register('USDT')} />
+                        <OutlinedInput {...register('USDT')} />
                     </Col>
 
                     <Col>
                         <Typography fontWeight={700}>BTC</Typography>
-                        <OutlinedInput type="number" {...register('BTC')} />
+                        <OutlinedInput {...register('BTC')} />
                     </Col>
 
                     <Col>
                         <Typography fontWeight={700}>XRP</Typography>
-                        <OutlinedInput type="number" {...register('XRP')} />
+                        <OutlinedInput {...register('XRP')} />
                     </Col>
 
                     <Col>
                         <Typography fontWeight={700}>BNB</Typography>
-                        <OutlinedInput type="number" {...register('BNB')} />
+                        <OutlinedInput {...register('BNB')} />
                     </Col>
 
                     <Col>
                         <Typography fontWeight={700}>DOGE</Typography>
-                        <OutlinedInput type="number" {...register('DOGE')} />
+                        <OutlinedInput {...register('DOGE')} />
                     </Col>
 
                     <Col>
                         <Typography fontWeight={700}>SOL</Typography>
-                        <OutlinedInput type="number" {...register('SOL')} />
+                        <OutlinedInput {...register('SOL')} />
                     </Col>
 
                     <Button type="submit" variant="contained">

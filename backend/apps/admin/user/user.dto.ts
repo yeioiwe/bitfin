@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'nestjs-swagger-dto';
+import { IsString } from 'nestjs-swagger-dto';
 
 export class UserCreateDto {
     @IsString()
@@ -11,10 +11,9 @@ export class UserCreateDto {
     name!: string;
 }
 
-// TODO
 export class HistoryDto {
-    @IsNumber()
-    userId!: number;
+    @IsString()
+    userId!: string;
 
     @IsString()
     pair!: string;
@@ -22,6 +21,6 @@ export class HistoryDto {
     @IsString()
     date!: string;
 
-    @IsNumber()
-    profit!: number;
+    @IsString()
+    profit!: string;
 }

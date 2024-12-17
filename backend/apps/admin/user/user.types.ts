@@ -12,7 +12,6 @@ export class UserList {
 
 export class Wallet extends WalletEntity {}
 
-//TODO
 export class HistoryItem extends HistoryEntity {}
 
 export class HistoryList {

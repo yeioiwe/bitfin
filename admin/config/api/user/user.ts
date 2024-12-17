@@ -22,7 +22,7 @@ import type {
     UseQueryOptions,
     UseQueryResult,
 } from '@tanstack/react-query';
-import type { User, UserCreateDto, UserList, Wallet } from '../api.schemas';
+import type { HistoryDto, HistoryList, User, UserCreateDto, UserList, Wallet } from '../api.schemas';
 import { axiosCall } from '.././api.axios';
 import type { ErrorType } from '.././api.axios';
 
@@ -533,6 +533,181 @@ export const useUserEditWallet = <TError = ErrorType<unknown>, TContext = unknow
     mutation?: UseMutationOptions<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext>;
 }): UseMutationResult<Awaited<ReturnType<typeof userEditWallet>>, TError, { data: Wallet }, TContext> => {
     const mutationOptions = getUserEditWalletMutationOptions(options);
+
+    return useMutation(mutationOptions);
+};
+export const userHistoryList = (id: number, signal?: AbortSignal) => {
+    return axiosCall<HistoryList>({ url: `/user/history/${id}`, method: 'GET', signal });
+};
+
+export const getUserHistoryListQueryKey = (id: number) => {
+    return [`/user/history/${id}`] as const;
+};
+
+export const getUserHistoryListInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof userHistoryList>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserHistoryListQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userHistoryList>>> = ({ signal }) =>
+        userHistoryList(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof userHistoryList>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserHistoryListInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof userHistoryList>>>;
+export type UserHistoryListInfiniteQueryError = ErrorType<unknown>;
+
+export function useUserHistoryListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userHistoryList>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options: {
+        query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserHistoryListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userHistoryList>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: {
+        query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> &
+            Pick<
+                UndefinedInitialDataOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>,
+                'initialData'
+            >;
+    },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserHistoryListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userHistoryList>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserHistoryListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof userHistoryList>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserHistoryListInfiniteQueryOptions(id, options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getUserHistoryListQueryOptions = <
+    TData = Awaited<ReturnType<typeof userHistoryList>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getUserHistoryListQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof userHistoryList>>> = ({ signal }) =>
+        userHistoryList(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof userHistoryList>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type UserHistoryListQueryResult = NonNullable<Awaited<ReturnType<typeof userHistoryList>>>;
+export type UserHistoryListQueryError = ErrorType<unknown>;
+
+export function useUserHistoryList<TData = Awaited<ReturnType<typeof userHistoryList>>, TError = ErrorType<unknown>>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserHistoryList<TData = Awaited<ReturnType<typeof userHistoryList>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> &
+            Pick<
+                UndefinedInitialDataOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>,
+                'initialData'
+            >;
+    },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useUserHistoryList<TData = Awaited<ReturnType<typeof userHistoryList>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useUserHistoryList<TData = Awaited<ReturnType<typeof userHistoryList>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof userHistoryList>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getUserHistoryListQueryOptions(id, options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const userAddHistory = (historyDto: HistoryDto, signal?: AbortSignal) => {
+    return axiosCall<void>({
+        url: `/user/history`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: historyDto,
+        signal,
+    });
+};
+
+export const getUserAddHistoryMutationOptions = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userAddHistory>>, TError, { data: HistoryDto }, TContext>;
+}): UseMutationOptions<Awaited<ReturnType<typeof userAddHistory>>, TError, { data: HistoryDto }, TContext> => {
+    const { mutation: mutationOptions } = options ?? {};
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof userAddHistory>>, { data: HistoryDto }> = props => {
+        const { data } = props ?? {};
+
+        return userAddHistory(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type UserAddHistoryMutationResult = NonNullable<Awaited<ReturnType<typeof userAddHistory>>>;
+export type UserAddHistoryMutationBody = HistoryDto;
+export type UserAddHistoryMutationError = ErrorType<unknown>;
+
+export const useUserAddHistory = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof userAddHistory>>, TError, { data: HistoryDto }, TContext>;
+}): UseMutationResult<Awaited<ReturnType<typeof userAddHistory>>, TError, { data: HistoryDto }, TContext> => {
+    const mutationOptions = getUserAddHistoryMutationOptions(options);
 
     return useMutation(mutationOptions);
 };
