@@ -1,49 +1,52 @@
 'use client';
-import BtcIcon from '@/public/btc-icon.png';
+import { traidingCurrency, TraidingCurrency as TraidingCurrencyType } from '@/shared/config/traiding.currency';
 import { Col, Row } from '@/shared/ui/boxes';
-import Image, { StaticImageData } from 'next/image';
+import { Typography } from '@mui/material';
+import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 
-const currency = [
-    { name: 'Bitcoin', code: 'BTC', icon: BtcIcon },
-    { name: 'Etherium', code: 'ETH', icon: BtcIcon },
-    { name: 'Ripple', code: 'XRP', icon: BtcIcon },
-];
+export const TraidingCurrency = ({
+    setCurrency,
+    activeCurrency,
+}: {
+    setCurrency: Dispatch<SetStateAction<TraidingCurrencyType>>;
+    activeCurrency: TraidingCurrencyType;
+}) => {
+    const currency = traidingCurrency;
 
-export const TraidingCurrency = ({ setCurrency }: { setCurrency: Dispatch<SetStateAction<string>> }) => {
     return (
         <Col gap={1}>
             {currency.map((c, i) => (
-                <CurrencyItem setCurrency={setCurrency} icon={c.icon} name={c.name} code={c.code} key={i} />
+                <CurrencyItem active={activeCurrency.code === c.code} setCurrency={setCurrency} currency={c} key={i} />
             ))}
         </Col>
     );
 };
 
 const CurrencyItem = ({
-    name,
-    code,
-    icon,
+    currency,
+    active,
     setCurrency,
 }: {
-    name: string;
-    code: string;
-    icon: StaticImageData;
-    setCurrency: Dispatch<SetStateAction<string>>;
+    currency: TraidingCurrencyType;
+    active: boolean;
+    setCurrency: Dispatch<SetStateAction<TraidingCurrencyType>>;
 }) => {
     return (
         <Row
             justifyContent={'flex-start'}
             sx={{ cursor: 'pointer' }}
-            onClick={() => setCurrency(code)}
+            onClick={() => setCurrency(currency)}
             borderRadius={'5px'}
             bgcolor={'#172d3e'}
             px={2}
             py={1}
             gap={1}
         >
-            <Image width={20} height={20} alt="" src={icon} />
-            {name}
+            <Image style={{ borderRadius: '50px' }} width={25} height={25} alt="" src={currency.icon} />
+            <Typography fontWeight={active ? 700 : 0} color={active ? '#01c095' : 'white'}>
+                {currency.name}
+            </Typography>
         </Row>
     );
 };
