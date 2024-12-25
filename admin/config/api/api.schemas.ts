@@ -4,6 +4,22 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
+export interface NewAdminDto {
+    login: string;
+    password: string;
+}
+
+export interface AdminType {
+    id: number;
+    login: string;
+    password: string;
+    root: boolean;
+}
+
+export interface AdminList {
+    items: AdminType[];
+}
+
 export interface AuthResponse {
     authToken: string;
 }
@@ -43,6 +59,7 @@ export interface Wallet {
 }
 
 export interface User {
+    group: number;
     id: number;
     name: string;
     password: string;

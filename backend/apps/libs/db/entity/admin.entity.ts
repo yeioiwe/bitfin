@@ -12,5 +12,10 @@ export class AdminEntity {
     login!: string;
 
     @Column()
+    @ApiProperty()
     password!: string;
+
+    @Column({ default: false })
+    @ApiProperty({ type: Boolean, default: false })
+    root!: boolean;
 }

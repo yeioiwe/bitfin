@@ -4,9 +4,25 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
-import { useMutation } from '@tanstack/react-query';
-import type { MutationFunction, UseMutationOptions, UseMutationResult } from '@tanstack/react-query';
-import type { AuthDto, AuthResponse } from '../api.schemas';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import type {
+    DataTag,
+    DefinedInitialDataOptions,
+    DefinedUseInfiniteQueryResult,
+    DefinedUseQueryResult,
+    InfiniteData,
+    MutationFunction,
+    QueryFunction,
+    QueryKey,
+    UndefinedInitialDataOptions,
+    UseInfiniteQueryOptions,
+    UseInfiniteQueryResult,
+    UseMutationOptions,
+    UseMutationResult,
+    UseQueryOptions,
+    UseQueryResult,
+} from '@tanstack/react-query';
+import type { AdminList, AdminType, AuthDto, AuthResponse, NewAdminDto } from '../api.schemas';
 import { axiosCall } from '.././api.axios';
 import type { ErrorType } from '.././api.axios';
 
@@ -45,3 +61,279 @@ export const useAuthLogin = <TError = ErrorType<unknown>, TContext = unknown>(op
 
     return useMutation(mutationOptions);
 };
+export const authGetMe = (signal?: AbortSignal) => {
+    return axiosCall<AdminType>({ url: `/auth/me`, method: 'GET', signal });
+};
+
+export const getAuthGetMeQueryKey = () => {
+    return [`/auth/me`] as const;
+};
+
+export const getAuthGetMeInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetMe>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getAuthGetMeQueryKey();
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof authGetMe>>> = ({ signal }) => authGetMe(signal);
+
+    return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof authGetMe>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type AuthGetMeInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof authGetMe>>>;
+export type AuthGetMeInfiniteQueryError = ErrorType<unknown>;
+
+export function useAuthGetMeInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetMe>>>,
+    TError = ErrorType<unknown>,
+>(options: {
+    query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>> &
+        Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>, 'initialData'>;
+}): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetMeInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetMe>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>> &
+        Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>, 'initialData'>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetMeInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetMe>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useAuthGetMeInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetMe>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getAuthGetMeInfiniteQueryOptions(options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getAuthGetMeQueryOptions = <
+    TData = Awaited<ReturnType<typeof authGetMe>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getAuthGetMeQueryKey();
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof authGetMe>>> = ({ signal }) => authGetMe(signal);
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof authGetMe>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type AuthGetMeQueryResult = NonNullable<Awaited<ReturnType<typeof authGetMe>>>;
+export type AuthGetMeQueryError = ErrorType<unknown>;
+
+export function useAuthGetMe<TData = Awaited<ReturnType<typeof authGetMe>>, TError = ErrorType<unknown>>(options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>> &
+        Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>, 'initialData'>;
+}): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetMe<TData = Awaited<ReturnType<typeof authGetMe>>, TError = ErrorType<unknown>>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>> &
+        Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>, 'initialData'>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetMe<TData = Awaited<ReturnType<typeof authGetMe>>, TError = ErrorType<unknown>>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useAuthGetMe<TData = Awaited<ReturnType<typeof authGetMe>>, TError = ErrorType<unknown>>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetMe>>, TError, TData>>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getAuthGetMeQueryOptions(options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const authNewAdmin = (newAdminDto: NewAdminDto, signal?: AbortSignal) => {
+    return axiosCall<void>({
+        url: `/auth/new`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: newAdminDto,
+        signal,
+    });
+};
+
+export const getAuthNewAdminMutationOptions = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof authNewAdmin>>, TError, { data: NewAdminDto }, TContext>;
+}): UseMutationOptions<Awaited<ReturnType<typeof authNewAdmin>>, TError, { data: NewAdminDto }, TContext> => {
+    const { mutation: mutationOptions } = options ?? {};
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof authNewAdmin>>, { data: NewAdminDto }> = props => {
+        const { data } = props ?? {};
+
+        return authNewAdmin(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type AuthNewAdminMutationResult = NonNullable<Awaited<ReturnType<typeof authNewAdmin>>>;
+export type AuthNewAdminMutationBody = NewAdminDto;
+export type AuthNewAdminMutationError = ErrorType<unknown>;
+
+export const useAuthNewAdmin = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof authNewAdmin>>, TError, { data: NewAdminDto }, TContext>;
+}): UseMutationResult<Awaited<ReturnType<typeof authNewAdmin>>, TError, { data: NewAdminDto }, TContext> => {
+    const mutationOptions = getAuthNewAdminMutationOptions(options);
+
+    return useMutation(mutationOptions);
+};
+export const authGetAdminList = (signal?: AbortSignal) => {
+    return axiosCall<AdminList>({ url: `/auth/admin/list`, method: 'GET', signal });
+};
+
+export const getAuthGetAdminListQueryKey = () => {
+    return [`/auth/admin/list`] as const;
+};
+
+export const getAuthGetAdminListInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetAdminList>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getAuthGetAdminListQueryKey();
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof authGetAdminList>>> = ({ signal }) =>
+        authGetAdminList(signal);
+
+    return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof authGetAdminList>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type AuthGetAdminListInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof authGetAdminList>>>;
+export type AuthGetAdminListInfiniteQueryError = ErrorType<unknown>;
+
+export function useAuthGetAdminListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetAdminList>>>,
+    TError = ErrorType<unknown>,
+>(options: {
+    query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>> &
+        Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>, 'initialData'>;
+}): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetAdminListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetAdminList>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>> &
+        Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>, 'initialData'>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetAdminListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetAdminList>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useAuthGetAdminListInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof authGetAdminList>>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getAuthGetAdminListInfiniteQueryOptions(options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getAuthGetAdminListQueryOptions = <
+    TData = Awaited<ReturnType<typeof authGetAdminList>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getAuthGetAdminListQueryKey();
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof authGetAdminList>>> = ({ signal }) =>
+        authGetAdminList(signal);
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof authGetAdminList>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type AuthGetAdminListQueryResult = NonNullable<Awaited<ReturnType<typeof authGetAdminList>>>;
+export type AuthGetAdminListQueryError = ErrorType<unknown>;
+
+export function useAuthGetAdminList<
+    TData = Awaited<ReturnType<typeof authGetAdminList>>,
+    TError = ErrorType<unknown>,
+>(options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>> &
+        Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>, 'initialData'>;
+}): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetAdminList<
+    TData = Awaited<ReturnType<typeof authGetAdminList>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>> &
+        Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>, 'initialData'>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useAuthGetAdminList<
+    TData = Awaited<ReturnType<typeof authGetAdminList>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useAuthGetAdminList<
+    TData = Awaited<ReturnType<typeof authGetAdminList>>,
+    TError = ErrorType<unknown>,
+>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof authGetAdminList>>, TError, TData>>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getAuthGetAdminListQueryOptions(options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}

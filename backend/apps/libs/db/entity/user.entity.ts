@@ -16,6 +16,10 @@ export class UserEntity {
     @Column({ type: String })
     name!: string;
 
+    @ApiProperty({ type: 'number' })
+    @Column({ type: Number })
+    group!: number;
+
     @ApiProperty({ type: 'string' })
     @Column({ type: String })
     password!: string;

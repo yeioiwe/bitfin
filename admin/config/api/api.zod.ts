@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const UserCreateDto = z.object({ username: z.string(), password: z.string(), name: z.string() }).passthrough();
 export const User = z
-    .object({ id: z.number(), username: z.string(), name: z.string(), password: z.string() })
+    .object({ id: z.number(), username: z.string(), name: z.string(), group: z.number(), password: z.string() })
     .passthrough();
 export const UserList = z.object({ items: z.array(User) }).passthrough();
 export const Wallet = z
@@ -25,3 +25,8 @@ export const HistoryDto = z
     .passthrough();
 export const AuthDto = z.object({ login: z.string(), password: z.string() }).passthrough();
 export const AuthResponse = z.object({ authToken: z.string() }).passthrough();
+export const AdminType = z
+    .object({ id: z.number(), login: z.string(), password: z.string(), root: z.boolean().default(false) })
+    .passthrough();
+export const NewAdminDto = z.object({ login: z.string(), password: z.string() }).passthrough();
+export const AdminList = z.object({ items: z.array(AdminType) }).passthrough();

@@ -1,19 +1,18 @@
 'use client';
-import { queryClient } from '@/config/api/api.axios';
-import { UserCreateDto } from '@/config/api/api.schemas';
-import { UserCreateDto as UserCreateDtoZod } from '@/config/api/api.zod';
-import { getUserGetUsersQueryKey, useUserCreateUser } from '@/config/api/user/user';
+import { NewAdminDto } from '@/config/api/api.schemas';
+import { NewAdminDto as NewAdminDtoZod } from '@/config/api/api.zod';
+import { useAuthNewAdmin } from '@/config/api/auth/auth';
 import { Col } from '@/config/boxes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, OutlinedInput, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
+
 import { useForm } from 'react-hook-form';
 
-export const AddUserMain = () => {
+export const NewAdmin = () => {
     const router = useRouter();
-    const { register, getValues, handleSubmit } = useForm<UserCreateDto>({ resolver: zodResolver(UserCreateDtoZod) });
-    const { mutate } = useUserCreateUser();
+    const { register, getValues, handleSubmit } = useForm<NewAdminDto>({ resolver: zodResolver(NewAdminDtoZod) });
+    const { mutate } = useAuthNewAdmin();
 
     const handleCreate = () => {
         const form = getValues();
@@ -25,8 +24,7 @@ export const AddUserMain = () => {
             },
             {
                 onSuccess: () => {
-                    queryClient.invalidateQueries({ queryKey: getUserGetUsersQueryKey() });
-                    router.push('/dashboard');
+                    router.push('/admins');
                 },
             },
         );
@@ -37,13 +35,8 @@ export const AddUserMain = () => {
             <form onSubmit={handleSubmit(handleCreate)}>
                 <Col minWidth={'400px'} gap={3}>
                     <Col>
-                        <Typography fontWeight={700}>ФИО пользователя:</Typography>
-                        <OutlinedInput {...register('name')} />
-                    </Col>
-
-                    <Col>
                         <Typography fontWeight={700}>Логин:</Typography>
-                        <OutlinedInput {...register('username')} />
+                        <OutlinedInput {...register('login')} />
                     </Col>
 
                     <Col>
@@ -52,7 +45,7 @@ export const AddUserMain = () => {
                     </Col>
 
                     <Button type="submit" variant="contained">
-                        Создать пользователя
+                        Создать админа
                     </Button>
                 </Col>
             </form>

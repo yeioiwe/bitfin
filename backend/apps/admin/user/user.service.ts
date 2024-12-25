@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { HistoryEntity } from 'apps/libs/db/entity/history.entity';
 import { UserEntity } from 'apps/libs/db/entity/user.entity';
 import { WalletEntity } from 'apps/libs/db/entity/wallet.entity';
+import { Request } from 'express';
 import { EntityManager } from 'typeorm';
 import { HistoryDto, UserCreateDto } from './user.dto';
 import { User, Wallet } from './user.types';
@@ -10,12 +11,13 @@ import { User, Wallet } from './user.types';
 export class UserService {
     constructor(private em: EntityManager) {}
 
-    async create(dto: UserCreateDto) {
+    async create(dto: UserCreateDto, adminId: number) {
         const userExist = await this.em.findOneBy(UserEntity, { username: dto.username });
 
         if (userExist) throw new BadRequestException();
 
         const newUser = await this.em.create(UserEntity, {
+            group: adminId,
             username: dto.username,
             password: dto.password,
             name: dto.name,
@@ -27,10 +29,14 @@ export class UserService {
         await this.em.save(WalletEntity, wallet);
     }
 
-    async getUserList() {
-        const userList = await this.em.find(UserEntity);
-
-        return { items: userList };
+    async getUserList(req: Request) {
+        if (req.user.sub.root) {
+            const userList = await this.em.find(UserEntity);
+            return { items: userList };
+        } else {
+            const userList = await this.em.findBy(UserEntity, { group: req.user.id });
+            return { items: userList };
+        }
     }
 
     async getUserById(userId: number) {

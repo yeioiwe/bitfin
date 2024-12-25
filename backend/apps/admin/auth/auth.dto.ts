@@ -7,3 +7,11 @@ export class AuthDto {
     @IsString()
     password: string;
 }
+
+export class NewAdminDto {
+    @IsString()
+    login: string;
+
+    @IsString()
+    password: string;
+}

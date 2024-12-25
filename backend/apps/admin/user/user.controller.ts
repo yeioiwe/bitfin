@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Request } from 'express';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { HistoryDto, UserCreateDto } from './user.dto';
 import { UserService } from './user.service';
@@ -12,15 +13,15 @@ export class UserController {
     @UseGuards(JwtGuard)
     @Post()
     @ApiOkResponse()
-    async createUser(@Body() dto: UserCreateDto): Promise<void> {
-        await this.userServcie.create(dto);
+    async createUser(@Body() dto: UserCreateDto, @Req() req: Request): Promise<void> {
+        await this.userServcie.create(dto, req.user.id);
     }
 
     @UseGuards(JwtGuard)
     @Get()
     @ApiOkResponse({ type: UserList })
-    async getUsers(): Promise<UserList> {
-        return await this.userServcie.getUserList();
+    async getUsers(@Req() req: Request): Promise<UserList> {
+        return await this.userServcie.getUserList(req);
     }
 
     @UseGuards(JwtGuard)
