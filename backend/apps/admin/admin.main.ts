@@ -1,11 +1,13 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { json } from 'body-parser';
 import { AdminModule } from './admin.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AdminModule);
     app.enableCors();
+    app.use(json({ limit: '20mb' }));
     const prefix = '/api/admin';
 
     const config = app.get(ConfigService);

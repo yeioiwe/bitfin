@@ -20,6 +20,20 @@ export const HistoryItem = z
     .object({ id: z.number(), userId: z.number(), pair: z.string(), date: z.string(), profit: z.number() })
     .passthrough();
 export const HistoryList = z.object({ items: z.array(HistoryItem) }).passthrough();
+export const BlogListItem = z
+    .object({ id: z.number(), title: z.string(), date: z.string(), shortDescription: z.string(), like: z.string() })
+    .passthrough();
+export const BlogList = z.object({ items: z.array(BlogListItem) }).passthrough();
+export const BlogItem = z
+    .object({
+        id: z.number(),
+        title: z.string(),
+        date: z.string(),
+        shortDescription: z.string(),
+        content: z.string(),
+        like: z.string(),
+    })
+    .passthrough();
 export const MarketItem = z
     .object({
         id: z.number(),

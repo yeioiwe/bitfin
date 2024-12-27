@@ -30,3 +30,16 @@ export const AdminType = z
     .passthrough();
 export const NewAdminDto = z.object({ login: z.string(), password: z.string() }).passthrough();
 export const AdminList = z.object({ items: z.array(AdminType) }).passthrough();
+export const CreateBlogDto = z
+    .object({
+        title: z.string(),
+        date: z.string(),
+        shortDescription: z.string(),
+        content: z.string(),
+        like: z.string(),
+    })
+    .passthrough();
+export const BlogListItem = z
+    .object({ id: z.number(), title: z.string(), date: z.string(), shortDescription: z.string(), like: z.string() })
+    .passthrough();
+export const BlogList = z.object({ items: z.array(BlogListItem) }).passthrough();

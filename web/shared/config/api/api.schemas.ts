@@ -24,6 +24,27 @@ export interface MarketList {
     items: MarketItem[];
 }
 
+export interface BlogItem {
+    content: string;
+    date: string;
+    id: number;
+    like: string;
+    shortDescription: string;
+    title: string;
+}
+
+export interface BlogListItem {
+    date: string;
+    id: number;
+    like: string;
+    shortDescription: string;
+    title: string;
+}
+
+export interface BlogList {
+    items: BlogListItem[];
+}
+
 export interface HistoryItem {
     date: string;
     id: number;

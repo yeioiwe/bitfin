@@ -4,6 +4,26 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
+export interface BlogListItem {
+    date: string;
+    id: number;
+    like: string;
+    shortDescription: string;
+    title: string;
+}
+
+export interface BlogList {
+    items: BlogListItem[];
+}
+
+export interface CreateBlogDto {
+    content: string;
+    date: string;
+    like: string;
+    shortDescription: string;
+    title: string;
+}
+
 export interface NewAdminDto {
     login: string;
     password: string;

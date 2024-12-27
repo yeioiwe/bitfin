@@ -6,6 +6,7 @@ import { DbModule } from 'apps/libs/db/db.module';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
+import { BlogModule } from './blog/blog.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { UserModule } from './user/user.module';
         UserModule,
         AuthModule,
         JwtModule,
+        BlogModule,
     ],
     controllers: [AuthController],
     providers: [AuthService],

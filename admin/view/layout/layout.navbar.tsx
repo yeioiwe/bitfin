@@ -11,7 +11,7 @@ export const NavBar = () => {
             <Typography>admin id: {admin?.id}</Typography>
             {admin?.root ? <NavBarItem name={'Админы'} href="admins" /> : null}
             <NavBarItem name={'Пользователи'} href="dashboard" />
-            <NavBarItem name={'Блог'} href="dashboard" />
+            <NavBarItem name={'Блог'} href="blog" />
         </Col>
     );
 };
