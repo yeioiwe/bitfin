@@ -14,68 +14,46 @@ export const Footer = () => {
         <Col mx={6} pt={12} height={400} alignItems={'flex-start'} justifyContent={'flex-start'}>
             <Box display={'flex'} flexDirection={isSm ? 'column' : 'row'} gap={isSm ? 4 : 12} alignItems={'flex-start'}>
                 <Col gap={2}>
-                    <Link href={'https://google.com'}>
-                        <Typography color="rgb(3,202,155)">Legal & privacy</Typography>
-                    </Link>
+                    <Typography fontSize={'21px'} fontWeight={700} color="rgb(3,202,155)">
+                        Legal & privacy
+                    </Typography>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/privacy'}>
                         <Typography>Privacy</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/cookies'}>
                         <Typography>Cookies Policy</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/cookies_preferences'}>
                         <Typography>Cookies Preferences</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/derivative'}>
                         <Typography>Derivative Terms</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/terms'}>
                         <Typography>Terms</Typography>
                     </Link>
                 </Col>
 
                 <Col gap={2}>
-                    <Link href={'https://google.com'}>
-                        <Typography color="rgb(3,202,155)">Помощь</Typography>
-                    </Link>
+                    <Typography fontSize={'21px'} fontWeight={700} color="rgb(3,202,155)">
+                        Помощь
+                    </Typography>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/help_center'}>
                         <Typography>Help Center</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/contact_us'}>
                         <Typography>Contact Us</Typography>
                     </Link>
 
-                    <Link href={'https://google.com'}>
+                    <Link href={'/bug_bounty'}>
                         <Typography>Bug Bounty</Typography>
-                    </Link>
-                </Col>
-
-                <Col gap={2}>
-                    <Link href={'https://google.com'}>
-                        <Typography color="rgb(3,202,155)">Сервис</Typography>
-                    </Link>
-
-                    <Link href={'https://google.com'}>
-                        <Typography>Margin Trading</Typography>
-                    </Link>
-
-                    <Link href={'https://google.com'}>
-                        <Typography>Derivatives</Typography>
-                    </Link>
-
-                    <Link href={'https://google.com'}>
-                        <Typography>P2P Trading</Typography>
-                    </Link>
-
-                    <Link href={'https://google.com'}>
-                        <Typography>Staking</Typography>
                     </Link>
                 </Col>
             </Box>
