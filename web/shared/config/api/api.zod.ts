@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const AuthDto = z.object({ username: z.string(), password: z.string() }).passthrough();
 export const AuthType = z.object({ access_token: z.string() }).passthrough();
 export const User = z
-    .object({ id: z.number(), username: z.string(), name: z.string(), password: z.string() })
+    .object({ id: z.number(), username: z.string(), name: z.string(), group: z.number(), password: z.string() })
     .passthrough();
 export const WalletItem = z
     .object({

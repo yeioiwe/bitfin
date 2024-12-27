@@ -47,6 +47,7 @@ export interface WalletItem {
 }
 
 export interface User {
+    group: number;
     id: number;
     name: string;
     password: string;
