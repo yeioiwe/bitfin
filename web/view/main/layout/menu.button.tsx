@@ -57,7 +57,7 @@ export default function MenuButton() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem sx={{ px: 4.3 }} onClick={() => router.push('/dashboard')}>
+                <MenuItem sx={{ px: 4.3 }} onClick={() => router.push('/wallet')}>
                     <Row gap={2}>
                         <AccountBalanceWalletIcon />
                         Кошелек
