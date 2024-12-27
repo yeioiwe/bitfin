@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
+import { BlogMain } from '@/view/blog/blog.main';
 
 export default function Blog() {
-    return <Typography>Blog page</Typography>;
+    return <BlogMain />;
 }
