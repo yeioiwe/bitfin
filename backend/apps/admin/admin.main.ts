@@ -6,12 +6,7 @@ import { AdminModule } from './admin.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AdminModule);
-    app.enableCors({
-        origin: '*',
-        methods: 'GET,POST,PUT,DELETE,OPTIONS',
-        allowedHeaders: '*',
-        credentials: true,
-    });
+    app.enableCors();
 
     app.use(json({ limit: '20mb' }));
     const prefix = '/api/admin';

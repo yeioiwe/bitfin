@@ -60,6 +60,10 @@ export const NewBlogMain = () => {
         );
     };
 
+    const check = () => {
+        console.log(img);
+    };
+
     return (
         <form onSubmit={createPost}>
             <Col width={'100%'} gap={2}>
@@ -113,12 +117,14 @@ export const NewBlogMain = () => {
                 <Button type="submit" variant="contained">
                     СОХРАНИТЬ
                 </Button>
+
+                <Button onClick={() => check()}>Check</Button>
             </Col>
         </form>
     );
 };
 
-export function fileToBase64(file: File) {
+export async function fileToBase64(file: File) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 

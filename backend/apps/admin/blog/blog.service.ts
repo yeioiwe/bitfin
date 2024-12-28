@@ -10,7 +10,12 @@ export class BlogService {
 
     async createPost(dto: CreateBlogDto) {
         const newPost = await this.em.create(BlogEntity, {
-            ...dto,
+            title: dto.title,
+            shortDescription: dto.shortDescription,
+            like: dto.like.toString(),
+            date: dto.date.toString(),
+            avatar: dto.avatar,
+            content: dto.content,
         });
 
         await this.em.save(BlogEntity, newPost);
