@@ -3,7 +3,6 @@ import { useBlogCreatePost } from '@/config/api/blog/blog';
 import { Col, Row } from '@/config/boxes';
 import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
@@ -13,12 +12,11 @@ import { formats123, toolbar123 } from './option';
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 export const NewBlogMain = () => {
-    const router = useRouter();
     const [value, setValue] = useState('');
     const [img, setImg] = useState<any>();
     const { register, getValues } = useForm();
 
-    const { mutate } = useBlogCreatePost();
+    const { mutateAsync } = useBlogCreatePost();
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
@@ -42,22 +40,17 @@ export const NewBlogMain = () => {
         },
     });
 
-    const createPost = () => {
-        mutate(
-            {
-                data: {
-                    avatar: img,
-                    content: value,
-                    date: getValues('date'),
-                    like: getValues('like'),
-                    title: getValues('title'),
-                    shortDescription: getValues('shortDescription'),
-                },
+    const createPost = async () => {
+        await mutateAsync({
+            data: {
+                avatar: img,
+                content: value,
+                date: getValues('date'),
+                like: getValues('like'),
+                title: getValues('title'),
+                shortDescription: getValues('shortDescription'),
             },
-            {
-                onSuccess: () => router.push('/dashboard'),
-            },
-        );
+        });
     };
 
     const check = () => {
