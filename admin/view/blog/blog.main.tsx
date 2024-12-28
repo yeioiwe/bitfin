@@ -20,7 +20,9 @@ export const BlogMain = () => {
 
             <Col gap={2}>
                 {blog?.items.map((b, i) => (
-                    <AminItem blog={b} key={i} />
+                    <Link href={`/blog/${b.id}`} key={i}>
+                        <AminItem blog={b} />
+                    </Link>
                 ))}
             </Col>
         </Col>

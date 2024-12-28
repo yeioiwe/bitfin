@@ -11,3 +11,5 @@ export class BlogList {
     })
     items!: BlogListItem[];
 }
+
+export class BlogItem extends BlogEntity {}

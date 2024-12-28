@@ -15,4 +15,7 @@ export class CreateBlogDto {
 
     @IsString()
     like!: string;
+
+    @IsString()
+    avatar!: string;
 }

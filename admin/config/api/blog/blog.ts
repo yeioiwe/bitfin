@@ -22,7 +22,7 @@ import type {
     UseQueryOptions,
     UseQueryResult,
 } from '@tanstack/react-query';
-import type { BlogList, CreateBlogDto } from '../api.schemas';
+import type { BlogItem, BlogList, CreateBlogDto } from '../api.schemas';
 import { axiosCall } from '.././api.axios';
 import type { ErrorType } from '.././api.axios';
 
@@ -196,3 +196,171 @@ export function useBlogGetBlogList<
 
     return query;
 }
+
+export const blogGetPost = (id: number, signal?: AbortSignal) => {
+    return axiosCall<BlogItem>({ url: `/blog/${id}`, method: 'GET', signal });
+};
+
+export const getBlogGetPostQueryKey = (id: number) => {
+    return [`/blog/${id}`] as const;
+};
+
+export const getBlogGetPostInfiniteQueryOptions = <
+    TData = InfiniteData<Awaited<ReturnType<typeof blogGetPost>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getBlogGetPostQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof blogGetPost>>> = ({ signal }) => blogGetPost(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof blogGetPost>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type BlogGetPostInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof blogGetPost>>>;
+export type BlogGetPostInfiniteQueryError = ErrorType<unknown>;
+
+export function useBlogGetPostInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof blogGetPost>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options: {
+        query: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useBlogGetPostInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof blogGetPost>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: {
+        query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>, 'initialData'>;
+    },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useBlogGetPostInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof blogGetPost>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useBlogGetPostInfinite<
+    TData = InfiniteData<Awaited<ReturnType<typeof blogGetPost>>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getBlogGetPostInfiniteQueryOptions(id, options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getBlogGetPostQueryOptions = <
+    TData = Awaited<ReturnType<typeof blogGetPost>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getBlogGetPostQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof blogGetPost>>> = ({ signal }) => blogGetPost(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof blogGetPost>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type BlogGetPostQueryResult = NonNullable<Awaited<ReturnType<typeof blogGetPost>>>;
+export type BlogGetPostQueryError = ErrorType<unknown>;
+
+export function useBlogGetPost<TData = Awaited<ReturnType<typeof blogGetPost>>, TError = ErrorType<unknown>>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>, 'initialData'>;
+    },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useBlogGetPost<TData = Awaited<ReturnType<typeof blogGetPost>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>, 'initialData'>;
+    },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useBlogGetPost<TData = Awaited<ReturnType<typeof blogGetPost>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useBlogGetPost<TData = Awaited<ReturnType<typeof blogGetPost>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData>> },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+    const queryOptions = getBlogGetPostQueryOptions(id, options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const blogEditPost = (blogItem: BlogItem, signal?: AbortSignal) => {
+    return axiosCall<void>({
+        url: `/blog/edit`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: blogItem,
+        signal,
+    });
+};
+
+export const getBlogEditPostMutationOptions = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof blogEditPost>>, TError, { data: BlogItem }, TContext>;
+}): UseMutationOptions<Awaited<ReturnType<typeof blogEditPost>>, TError, { data: BlogItem }, TContext> => {
+    const { mutation: mutationOptions } = options ?? {};
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof blogEditPost>>, { data: BlogItem }> = props => {
+        const { data } = props ?? {};
+
+        return blogEditPost(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type BlogEditPostMutationResult = NonNullable<Awaited<ReturnType<typeof blogEditPost>>>;
+export type BlogEditPostMutationBody = BlogItem;
+export type BlogEditPostMutationError = ErrorType<unknown>;
+
+export const useBlogEditPost = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof blogEditPost>>, TError, { data: BlogItem }, TContext>;
+}): UseMutationResult<Awaited<ReturnType<typeof blogEditPost>>, TError, { data: BlogItem }, TContext> => {
+    const mutationOptions = getBlogEditPostMutationOptions(options);
+
+    return useMutation(mutationOptions);
+};

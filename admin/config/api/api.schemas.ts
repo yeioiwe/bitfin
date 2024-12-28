@@ -4,6 +4,16 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
+export interface BlogItem {
+    avatar: string;
+    content: string;
+    date: string;
+    id: number;
+    like: string;
+    shortDescription: string;
+    title: string;
+}
+
 export interface BlogListItem {
     date: string;
     id: number;
@@ -17,6 +27,7 @@ export interface BlogList {
 }
 
 export interface CreateBlogDto {
+    avatar: string;
     content: string;
     date: string;
     like: string;

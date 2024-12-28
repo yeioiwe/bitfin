@@ -24,6 +24,10 @@ export class BlogEntity {
     @ApiProperty()
     content!: string;
 
+    @Column('mediumtext')
+    @ApiProperty()
+    avatar!: string;
+
     @Column('text')
     @ApiProperty()
     like!: string;

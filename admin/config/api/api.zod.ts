@@ -37,9 +37,21 @@ export const CreateBlogDto = z
         shortDescription: z.string(),
         content: z.string(),
         like: z.string(),
+        avatar: z.string(),
     })
     .passthrough();
 export const BlogListItem = z
     .object({ id: z.number(), title: z.string(), date: z.string(), shortDescription: z.string(), like: z.string() })
     .passthrough();
 export const BlogList = z.object({ items: z.array(BlogListItem) }).passthrough();
+export const BlogItem = z
+    .object({
+        id: z.number(),
+        title: z.string(),
+        date: z.string(),
+        shortDescription: z.string(),
+        content: z.string(),
+        avatar: z.string(),
+        like: z.string(),
+    })
+    .passthrough();

@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { CreateBlogDto } from './blog.dto';
 import { BlogService } from './blog.service';
-import { BlogList } from './blog.types';
+import { BlogItem, BlogList } from './blog.types';
 
 @Controller('blog')
 export class BlogController {
@@ -23,5 +23,19 @@ export class BlogController {
         const blogList = await this.blogService.getBlogList();
 
         return { items: blogList };
+    }
+
+    @UseGuards(JwtGuard)
+    @Get(':id')
+    @ApiOkResponse({ type: BlogItem })
+    async getPost(@Param('id') postId: number): Promise<BlogItem> {
+        return await this.blogService.getPost(postId);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('edit')
+    @ApiOkResponse()
+    async editPost(@Body() dto: BlogItem): Promise<void> {
+        await this.blogService.editPost(dto);
     }
 }

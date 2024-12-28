@@ -7,7 +7,7 @@ export class BlogService {
     constructor(private em: EntityManager) {}
 
     async getList() {
-        const blogList = await this.em.find(BlogEntity);
+        const blogList = await this.em.find(BlogEntity, { order: { id: 'DESC' } });
 
         return blogList.map(p => {
             return { ...p, content: undefined };

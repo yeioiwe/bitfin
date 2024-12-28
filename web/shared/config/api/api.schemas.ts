@@ -25,6 +25,7 @@ export interface MarketList {
 }
 
 export interface BlogItem {
+    avatar: string;
     content: string;
     date: string;
     id: number;
@@ -34,6 +35,7 @@ export interface BlogItem {
 }
 
 export interface BlogListItem {
+    avatar: string;
     date: string;
     id: number;
     like: string;

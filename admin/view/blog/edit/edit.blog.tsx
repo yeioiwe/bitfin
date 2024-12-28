@@ -1,24 +1,36 @@
 'use client';
-import { useBlogCreatePost } from '@/config/api/blog/blog';
+import { useBlogEditPost, useBlogGetPost } from '@/config/api/blog/blog';
 import { Col, Row } from '@/config/boxes';
 import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import 'react-quill-new/dist/quill.snow.css';
-import { formats123, toolbar123 } from './option';
+import { fileToBase64 } from '../newBlog/new.blog';
+import { formats123, toolbar123 } from '../newBlog/option';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
-export const NewBlogMain = () => {
-    const router = useRouter();
-    const [value, setValue] = useState('');
+export const BlogEdit = ({ id }: { id: number }) => {
+    const { data: post } = useBlogGetPost(id);
+    const [content, setContent] = useState('');
     const [img, setImg] = useState<any>();
-    const { register, getValues } = useForm();
 
-    const { mutate } = useBlogCreatePost();
+    const { mutate } = useBlogEditPost();
+
+    const { register, getValues, setValue } = useForm();
+
+    useEffect(() => {
+        if (post !== undefined) {
+            setValue('title', post.title);
+            setValue('shortDescription', post.shortDescription);
+            setValue('date', post.like);
+            setValue('like', post.like);
+            setContent(post.content);
+            setImg(post.avatar);
+        }
+    }, [post]);
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
@@ -42,29 +54,26 @@ export const NewBlogMain = () => {
         },
     });
 
-    const createPost = () => {
-        mutate(
-            {
-                data: {
-                    avatar: img,
-                    content: value,
-                    date: getValues('date'),
-                    like: getValues('like'),
-                    title: getValues('title'),
-                    shortDescription: getValues('shortDescription'),
-                },
+    const handleEdit = () => {
+        mutate({
+            data: {
+                id,
+                avatar: img,
+                content,
+                date: getValues('date'),
+                like: getValues('like'),
+                shortDescription: getValues('shortDescription'),
+                title: getValues('title'),
             },
-            {
-                onSuccess: () => router.push('/dashboard'),
-            },
-        );
+        });
     };
+    if (post == undefined) return null;
 
     return (
-        <form onSubmit={createPost}>
+        <form onSubmit={handleEdit}>
             <Col width={'100%'} gap={2}>
                 <Typography fontWeight={700} color="white">
-                    Create new blog post:
+                    Edit blog post id: {post.id}
                 </Typography>
 
                 <Col width={'100%'}>
@@ -94,8 +103,8 @@ export const NewBlogMain = () => {
                         toolbar: toolbar123,
                     }}
                     theme="snow"
-                    value={value}
-                    onChange={setValue}
+                    value={content}
+                    onChange={setContent}
                 />
 
                 <Row gap={4} width={'100%'} justifyContent={'flex-start'}>
@@ -111,25 +120,9 @@ export const NewBlogMain = () => {
                 </Row>
 
                 <Button type="submit" variant="contained">
-                    СОХРАНИТЬ
+                    ОБНОВИТЬ
                 </Button>
             </Col>
         </form>
     );
 };
-
-export function fileToBase64(file: File) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = event => {
-            resolve(event.target?.result);
-        };
-
-        reader.onerror = error => {
-            reject(error);
-        };
-
-        reader.readAsDataURL(file);
-    });
-}
