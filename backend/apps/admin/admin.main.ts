@@ -6,13 +6,12 @@ import { AdminModule } from './admin.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AdminModule);
+
     app.enableCors({
-        origin: '*',
+        origin: 'https://admin.bitflnex.online',
         methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
         allowedHeaders: 'Authorization, Content-Type, X-Requested-With, Content-Length, Accept',
         credentials: true,
-        preflightContinue: false,
-        optionsSuccessStatus: 204,
     });
 
     app.use(json({ limit: '50mb' }));
