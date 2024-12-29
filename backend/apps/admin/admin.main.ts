@@ -6,9 +6,16 @@ import { AdminModule } from './admin.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AdminModule);
-    app.enableCors();
+    app.enableCors({
+        origin: 'https://admin.bitflnex.online',
+        methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        allowedHeaders: '*',
+        credentials: true,
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    });
 
-    app.use(json({ limit: '20mb' }));
+    app.use(json({ limit: '50mb' }));
     const prefix = '/api/admin';
 
     const config = app.get(ConfigService);
