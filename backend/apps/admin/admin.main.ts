@@ -9,7 +9,7 @@ async function bootstrap() {
     app.enableCors({
         origin: 'https://admin.bitflnex.online',
         methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        allowedHeaders: '*',
+        allowedHeaders: 'Authorization, Content-Type, X-Requested-With, Content-Length, Accept',
         credentials: true,
         preflightContinue: false,
         optionsSuccessStatus: 204,
