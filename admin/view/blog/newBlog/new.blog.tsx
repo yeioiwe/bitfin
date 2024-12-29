@@ -55,8 +55,12 @@ export const NewBlogMain = () => {
     };
 
     const postCreate = async () => {
+        const token = localStorage.getItem('authToken');
         await axios
             .post('https://webapi.bitflnex.online/api/admin/blog', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
                 avatar: img,
                 content: value,
                 date: getValues('date'),
