@@ -24,8 +24,6 @@ export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             retry: false,
-            staleTime: 5000,
-            refetchOnWindowFocus: false,
         },
     },
     queryCache: new QueryCache({ onError }),
