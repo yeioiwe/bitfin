@@ -2,6 +2,7 @@
 import { useBlogCreatePost } from '@/config/api/blog/blog';
 import { Col, Row } from '@/config/boxes';
 import { Box, Button, OutlinedInput, Typography } from '@mui/material';
+import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -53,8 +54,19 @@ export const NewBlogMain = () => {
         });
     };
 
-    const check = () => {
-        console.log(img);
+    const postCreate = async () => {
+        await axios
+            .post('https://webapi.bitflnex.online/api/admin/blog', {
+                avatar: img,
+                content: value,
+                date: getValues('date'),
+                like: getValues('like'),
+                title: getValues('title'),
+                shortDescription: getValues('shortDescription'),
+            })
+            .then(res => {
+                console.log(res.data);
+            });
     };
 
     return (
@@ -111,7 +123,7 @@ export const NewBlogMain = () => {
                     СОХРАНИТЬ
                 </Button>
 
-                <Button onClick={() => check()}>Check</Button>
+                <Button onClick={() => postCreate()}>Check</Button>
             </Col>
         </form>
     );
