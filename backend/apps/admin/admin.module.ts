@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { DbModule } from 'apps/libs/db/db.module';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
@@ -19,8 +21,11 @@ import { UserModule } from './user/user.module';
         AuthModule,
         JwtModule,
         BlogModule,
+        ThrottlerModule.forRoot({
+            throttlers: [{ limit: 60, ttl: 60 }],
+        }),
     ],
     controllers: [AuthController],
-    providers: [AuthService],
+    providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, AuthService],
 })
 export class AdminModule {}
