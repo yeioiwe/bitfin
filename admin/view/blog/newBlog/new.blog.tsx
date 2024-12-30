@@ -2,7 +2,6 @@
 import { useBlogCreatePost } from '@/config/api/blog/blog';
 import { Col, Row } from '@/config/boxes';
 import { Box, Button, OutlinedInput, Typography } from '@mui/material';
-import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -52,29 +51,12 @@ export const NewBlogMain = () => {
                 shortDescription: getValues('shortDescription'),
             },
         });
-    };
 
-    const postCreate = async () => {
-        const token = localStorage.getItem('authToken');
-        await axios
-            .post('https://webapi.bitflnex.online/api/admin/blog', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                avatar: img,
-                content: value,
-                date: getValues('date'),
-                like: getValues('like'),
-                title: getValues('title'),
-                shortDescription: getValues('shortDescription'),
-            })
-            .then(res => {
-                console.log(res.data);
-            });
+        await new Promise(resolve => setTimeout(resolve, 5000));
     };
 
     return (
-        <form onSubmit={createPost}>
+        <form>
             <Col width={'100%'} gap={2}>
                 <Typography fontWeight={700} color="white">
                     Create new blog post:
@@ -123,11 +105,9 @@ export const NewBlogMain = () => {
                     </Col>
                 </Row>
 
-                <Button type="submit" variant="contained">
+                <Button onClick={() => createPost()} variant="contained">
                     СОХРАНИТЬ
                 </Button>
-
-                <Button onClick={() => postCreate()}>Check</Button>
             </Col>
         </form>
     );
