@@ -4,6 +4,27 @@
  * Project Admin API
  * OpenAPI spec version: 1.0
  */
+export interface CommentItem {
+    comment: string;
+    date: string;
+    id: number;
+    like: string;
+    name: string;
+    postId: number;
+}
+
+export interface CommentList {
+    items: CommentItem[];
+}
+
+export interface CreateCommentDto {
+    comment: string;
+    date: string;
+    like: string;
+    name: string;
+    postId: number;
+}
+
 export interface BlogItem {
     avatar: string;
     content: string;

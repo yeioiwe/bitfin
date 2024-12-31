@@ -1,4 +1,4 @@
-import { IsString } from 'nestjs-swagger-dto';
+import { IsNumber, IsString } from 'nestjs-swagger-dto';
 
 export class CreateBlogDto {
     @IsString()
@@ -18,4 +18,21 @@ export class CreateBlogDto {
 
     @IsString()
     avatar!: string;
+}
+
+export class CreateCommentDto {
+    @IsString()
+    name!: string;
+
+    @IsString()
+    date!: string;
+
+    @IsNumber()
+    postId!: number;
+
+    @IsString()
+    like!: string;
+
+    @IsString()
+    comment!: string;
 }

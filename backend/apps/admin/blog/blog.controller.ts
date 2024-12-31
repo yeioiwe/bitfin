@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guard/jwt.guard';
-import { CreateBlogDto } from './blog.dto';
+import { CreateBlogDto, CreateCommentDto } from './blog.dto';
 import { BlogService } from './blog.service';
-import { BlogItem, BlogList } from './blog.types';
+import { BlogItem, BlogList, CommentList } from './blog.types';
 
 @Controller('blog')
 export class BlogController {
@@ -37,5 +37,33 @@ export class BlogController {
     @ApiOkResponse()
     async editPost(@Body() dto: BlogItem): Promise<void> {
         await this.blogService.editPost(dto);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('delete/:id')
+    @ApiOkResponse()
+    async deletePost(@Param('id') postId: number): Promise<void> {
+        await this.blogService.deletePost(postId);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('comment')
+    @ApiOkResponse()
+    async createComment(@Body() dto: CreateCommentDto): Promise<void> {
+        await this.blogService.cerateComment(dto);
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('comment/:id')
+    @ApiOkResponse({ type: CommentList })
+    async getComment(@Param('id') postId: number): Promise<CommentList> {
+        return await this.blogService.getCommentList(postId);
+    }
+
+    @UseGuards(JwtGuard)
+    @Post('comment/:id')
+    @ApiOkResponse()
+    async deleteComment(@Param('id') commentId: number): Promise<void> {
+        await this.blogService.deleteComment(commentId);
     }
 }

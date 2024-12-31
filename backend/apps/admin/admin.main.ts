@@ -7,12 +7,14 @@ import { AdminModule } from './admin.module';
 async function bootstrap() {
     const app = await NestFactory.create(AdminModule);
 
-    app.enableCors({
-        origin: 'https://admin.bitflnex.online',
-        methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        allowedHeaders: 'Authorization, Content-Type, X-Requested-With, Content-Length, Accept',
-        credentials: true,
-    });
+    app.enableCors();
+
+    // app.enableCors({
+    //     origin: 'https://admin.bitflnex.online',
+    //     methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    //     allowedHeaders: 'Authorization, Content-Type, X-Requested-With, Content-Length, Accept',
+    //     credentials: true,
+    // });
 
     app.use(json({ limit: '50mb' }));
     const prefix = '/api/admin';

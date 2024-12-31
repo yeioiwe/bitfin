@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { BlogEntity } from 'apps/libs/db/entity/blog.entity';
+import { CommentEntity } from 'apps/libs/db/entity/comment.entity';
 import { EntityManager } from 'typeorm';
-import { CreateBlogDto } from './blog.dto';
+import { CreateBlogDto, CreateCommentDto } from './blog.dto';
 import { BlogItem } from './blog.types';
 
 @Injectable()
@@ -41,5 +42,25 @@ export class BlogService {
         if (!post) throw new BadRequestException();
 
         await this.em.update(BlogEntity, { id: dto.id }, { ...dto });
+    }
+
+    async deletePost(postId: number) {
+        await this.em.delete(BlogEntity, { id: postId });
+    }
+
+    async cerateComment(dto: CreateCommentDto) {
+        const comment = await this.em.create(CommentEntity, { ...dto });
+
+        await this.em.save(CommentEntity, comment);
+    }
+
+    async deleteComment(id: number) {
+        await this.em.delete(CommentEntity, { id });
+    }
+
+    async getCommentList(id: number) {
+        const postList = await this.em.findBy(CommentEntity, { postId: id });
+
+        return { items: postList };
     }
 }

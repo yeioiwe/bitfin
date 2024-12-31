@@ -56,60 +56,62 @@ export const NewBlogMain = () => {
     };
 
     return (
-        <form>
-            <Col width={'100%'} gap={2}>
-                <Typography fontWeight={700} color="white">
-                    Create new blog post:
-                </Typography>
+        <Box width={'100%'}>
+            <form>
+                <Col gap={2}>
+                    <Typography fontSize={'21px'} fontWeight={700} color="white">
+                        Создать новый пост:
+                    </Typography>
 
-                <Col width={'100%'}>
-                    <Typography>Заголовок:</Typography>
-                    <OutlinedInput {...register('title')} />
-                </Col>
+                    <Col width={'100%'}>
+                        <Typography>Заголовок:</Typography>
+                        <OutlinedInput {...register('title')} />
+                    </Col>
 
-                <Col width={'100%'}>
-                    <Typography>Краткое описание (для превью):</Typography>
-                    <OutlinedInput {...register('shortDescription')} />
-                </Col>
+                    <Col width={'100%'}>
+                        <Typography>Краткое описание (для превью):</Typography>
+                        <OutlinedInput {...register('shortDescription')} />
+                    </Col>
 
-                <Box>
-                    <Box p={1} bgcolor={'#232323'} {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {acceptedFiles.length > 0 ? (
-                            acceptedFiles.at(0)?.name
-                        ) : (
-                            <Typography>Картинка превью</Typography>
-                        )}
+                    <Box>
+                        <Box p={1} bgcolor={'#232323'} {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {acceptedFiles.length > 0 ? (
+                                acceptedFiles.at(0)?.name
+                            ) : (
+                                <Typography>Картинка превью</Typography>
+                            )}
+                        </Box>
                     </Box>
-                </Box>
 
-                <ReactQuill
-                    formats={formats123}
-                    modules={{
-                        toolbar: toolbar123,
-                    }}
-                    theme="snow"
-                    value={value}
-                    onChange={setValue}
-                />
+                    <ReactQuill
+                        formats={formats123}
+                        modules={{
+                            toolbar: toolbar123,
+                        }}
+                        theme="snow"
+                        value={value}
+                        onChange={setValue}
+                    />
 
-                <Row gap={4} width={'100%'} justifyContent={'flex-start'}>
-                    <Col>
-                        <Typography>Дата (04.12.2024):</Typography>
-                        <OutlinedInput {...register('date')} />
-                    </Col>
+                    <Row gap={4} width={'100%'} justifyContent={'flex-start'}>
+                        <Col>
+                            <Typography>Дата (04.12.2024):</Typography>
+                            <OutlinedInput {...register('date')} />
+                        </Col>
 
-                    <Col>
-                        <Typography>К-во лайков:</Typography>
-                        <OutlinedInput {...register('like')} />
-                    </Col>
-                </Row>
+                        <Col>
+                            <Typography>К-во лайков:</Typography>
+                            <OutlinedInput {...register('like')} />
+                        </Col>
+                    </Row>
 
-                <Button onClick={() => createPost()} variant="contained">
-                    СОХРАНИТЬ
-                </Button>
-            </Col>
-        </form>
+                    <Button onClick={() => createPost()} variant="contained">
+                        СОХРАНИТЬ
+                    </Button>
+                </Col>
+            </form>
+        </Box>
     );
 };
 
