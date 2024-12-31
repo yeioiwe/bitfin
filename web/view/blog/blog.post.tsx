@@ -1,14 +1,14 @@
 'use client';
-import { useBlogGetPost } from '@/shared/config/api/blog/blog';
+import { CommentItem } from '@/shared/config/api/api.schemas';
+import { useBlogGetComment, useBlogGetPost } from '@/shared/config/api/blog/blog';
 import { Col, Row } from '@/shared/ui/boxes';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box, Link, Typography } from '@mui/material';
-import { useRouter } from 'next/navigation';
 
 export const BlogPostId = ({ id }: { id: number }) => {
-    const router = useRouter();
     const { data: post } = useBlogGetPost(id);
     if (!post) return null;
 
@@ -48,9 +48,58 @@ export const BlogPostId = ({ id }: { id: number }) => {
                     <AccessTimeFilledIcon />
                     <Typography>{post.date}</Typography>
                 </Row>
-                <Row gap={1}>
+                <Row gap={1} color={'#01c095'}>
                     <FavoriteIcon />
                     <Typography>{post.like}</Typography>
+                </Row>
+            </Row>
+
+            <CommentsList id={id} />
+        </Col>
+    );
+};
+
+const CommentsList = ({ id }: { id: number }) => {
+    const { data: postList } = useBlogGetComment(id);
+
+    if (postList === undefined) return null;
+    return (
+        <Col mt={4}>
+            <Typography fontWeight={700} fontSize={'21px'}>
+                Комментарии:
+            </Typography>
+
+            <Col gap={2} mt={2}>
+                {postList.items.map((c, i) => (
+                    <CommentsItem comment={c} key={i} />
+                ))}
+            </Col>
+        </Col>
+    );
+};
+
+const CommentsItem = ({ comment }: { comment: CommentItem }) => {
+    return (
+        <Col gap={2} bgcolor={'#172d3e'} borderRadius={'6px'} padding={'20px'}>
+            <Row gap={1} justifyContent={'flex-start'}>
+                <AccountCircleIcon />
+
+                <Typography color="#fff" fontWeight={700}>
+                    {comment.name}
+                </Typography>
+            </Row>
+
+            <Typography>{comment.comment}</Typography>
+
+            <Row justifyContent={'space-between'}>
+                <Row gap={1}>
+                    <AccessTimeFilledIcon sx={{ width: '18px', height: '18px' }} />
+                    <Typography>{comment.date}</Typography>
+                </Row>
+
+                <Row gap={1} color={'#01c095'}>
+                    <FavoriteIcon sx={{ width: '18px', height: '18px' }} />
+                    <Typography>{comment.like}</Typography>
                 </Row>
             </Row>
         </Col>

@@ -13,7 +13,7 @@ import type {
     UseQueryOptions,
     UseQueryResult,
 } from '@tanstack/react-query';
-import type { BlogItem, BlogList } from '../api.schemas';
+import type { BlogItem, BlogList, CommentList } from '../api.schemas';
 import { axiosCall } from '.././api.axios';
 import type { ErrorType } from '.././api.axios';
 
@@ -168,6 +168,91 @@ export function useBlogGetPost<TData = Awaited<ReturnType<typeof blogGetPost>>, 
     options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof blogGetPost>>, TError, TData> },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
     const queryOptions = getBlogGetPostQueryOptions(id, options);
+
+    const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const blogGetComment = (id: number, signal?: AbortSignal) => {
+    return axiosCall<CommentList>({ url: `/blog/comment/${id}`, method: 'GET', signal });
+};
+
+export const getBlogGetCommentQueryKey = (id: number) => {
+    return [`/blog/comment/${id}`] as const;
+};
+
+export const getBlogGetCommentInfiniteQueryOptions = <
+    TData = Awaited<ReturnType<typeof blogGetComment>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetComment>>, TError, TData> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getBlogGetCommentQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof blogGetComment>>> = ({ signal }) =>
+        blogGetComment(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof blogGetComment>>,
+        TError,
+        TData
+    > & { queryKey: QueryKey };
+};
+
+export type BlogGetCommentInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof blogGetComment>>>;
+export type BlogGetCommentInfiniteQueryError = ErrorType<unknown>;
+
+export function useBlogGetCommentInfinite<
+    TData = Awaited<ReturnType<typeof blogGetComment>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof blogGetComment>>, TError, TData> },
+): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } {
+    const queryOptions = getBlogGetCommentInfiniteQueryOptions(id, options);
+
+    const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+export const getBlogGetCommentQueryOptions = <
+    TData = Awaited<ReturnType<typeof blogGetComment>>,
+    TError = ErrorType<unknown>,
+>(
+    id: number,
+    options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof blogGetComment>>, TError, TData> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getBlogGetCommentQueryKey(id);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof blogGetComment>>> = ({ signal }) =>
+        blogGetComment(id, signal);
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof blogGetComment>>,
+        TError,
+        TData
+    > & { queryKey: QueryKey };
+};
+
+export type BlogGetCommentQueryResult = NonNullable<Awaited<ReturnType<typeof blogGetComment>>>;
+export type BlogGetCommentQueryError = ErrorType<unknown>;
+
+export function useBlogGetComment<TData = Awaited<ReturnType<typeof blogGetComment>>, TError = ErrorType<unknown>>(
+    id: number,
+    options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof blogGetComment>>, TError, TData> },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+    const queryOptions = getBlogGetCommentQueryOptions(id, options);
 
     const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

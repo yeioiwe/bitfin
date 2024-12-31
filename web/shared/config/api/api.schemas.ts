@@ -24,6 +24,19 @@ export interface MarketList {
     items: MarketItem[];
 }
 
+export interface CommentItem {
+    comment: string;
+    date: string;
+    id: number;
+    like: string;
+    name: string;
+    postId: number;
+}
+
+export interface CommentList {
+    items: CommentItem[];
+}
+
 export interface BlogItem {
     avatar: string;
     content: string;

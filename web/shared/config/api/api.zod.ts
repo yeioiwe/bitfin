@@ -42,6 +42,17 @@ export const BlogItem = z
         like: z.string(),
     })
     .passthrough();
+export const CommentItem = z
+    .object({
+        id: z.number(),
+        postId: z.number(),
+        name: z.string(),
+        date: z.string(),
+        like: z.string(),
+        comment: z.string(),
+    })
+    .passthrough();
+export const CommentList = z.object({ items: z.array(CommentItem) }).passthrough();
 export const MarketItem = z
     .object({
         id: z.number(),
