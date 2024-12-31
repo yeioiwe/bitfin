@@ -36,7 +36,7 @@ export const PostComments = ({ id }: { id: number }) => {
                 Добавить комментарий:
             </Typography>
 
-            <form onSubmit={handleCreateComment}>
+            <form>
                 <Col gap={4}>
                     <Row gap={4} justifyContent={'flex-start'}>
                         <Col>
@@ -60,7 +60,7 @@ export const PostComments = ({ id }: { id: number }) => {
                         <OutlinedInput {...register('comment')} />
                     </Col>
 
-                    <Button variant="contained" type="submit">
+                    <Button variant="contained" onClick={() => handleCreateComment()}>
                         Добавить комментарий
                     </Button>
                 </Col>
